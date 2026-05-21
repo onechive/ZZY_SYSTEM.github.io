@@ -3,10 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
 
     // 2. Scroll Reveal Animations (Fade in & up)
     const observerOptions = {
@@ -143,5 +145,71 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateSlider();
             });
         }
+    }
+
+    // 6. Team Page Spotlight Effect
+    const teamCybernetic = document.querySelector('.team-cybernetic');
+    const teamCyberneticText = document.querySelector('.team-cybernetic-text-spotlight');
+
+    if(teamCybernetic && teamCyberneticText) {
+        teamCybernetic.addEventListener('mousemove', (e) => {
+            const rect = teamCyberneticText.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            teamCyberneticText.style.setProperty('--x', `${x}px`);
+            teamCyberneticText.style.setProperty('--y', `${y}px`);
+        });
+
+        teamCybernetic.addEventListener('mouseenter', () => {
+            teamCyberneticText.style.setProperty('--opacity', `1`);
+        });
+
+        teamCybernetic.addEventListener('mouseleave', () => {
+            teamCyberneticText.style.setProperty('--opacity', `0`);
+        });
+    }
+
+    // 7. Team Lobby Scroll Animation
+    const lobbySection = document.getElementById('lobby-section');
+    if (lobbySection) {
+        const photo1 = document.getElementById('lobby-photo-1');
+        const photo2 = document.getElementById('lobby-photo-2');
+        const info1top = document.getElementById('lobby-info-1-top');
+        const info1bot = document.getElementById('lobby-info-1-bottom');
+        const info2top = document.getElementById('lobby-info-2-top');
+        const info2bot = document.getElementById('lobby-info-2-bottom');
+
+        window.addEventListener('scroll', () => {
+            const rect = lobbySection.getBoundingClientRect();
+            // rect.top is 0 when section hits the top of viewport
+            const progress = -rect.top / window.innerHeight;
+            
+            // 0 -> 0.5: scale down photo 1
+            if (progress > 0) {
+                photo1.classList.add('scaled');
+            } else {
+                photo1.classList.remove('scaled');
+            }
+
+            // 0.5 -> 1.0: crossfade to photo 2 and info 2
+            if (progress > 0.5) {
+                photo1.classList.remove('active');
+                if (info1top) info1top.classList.remove('active');
+                if (info1bot) info1bot.classList.remove('active');
+                photo2.classList.add('active');
+                if (info2top) info2top.classList.add('active');
+                if (info2bot) info2bot.classList.add('active');
+                photo2.classList.add('scaled');
+            } else {
+                photo1.classList.add('active');
+                if (info1top) info1top.classList.add('active');
+                if (info1bot) info1bot.classList.add('active');
+                photo2.classList.remove('active');
+                if (info2top) info2top.classList.remove('active');
+                if (info2bot) info2bot.classList.remove('active');
+                photo2.classList.remove('scaled');
+            }
+        });
     }
 });
