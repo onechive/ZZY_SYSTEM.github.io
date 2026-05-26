@@ -1,0 +1,604 @@
+/* product.css */
+.product-page {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Base header fix for product page */
+.product-page .main-header {
+    background: transparent;
+}
+
+.product-main {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Shared section class */
+.prod-sec {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* SECTION 1 */
+.sec-01 {
+    min-height: 1100px;
+    padding-top: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.sec-01-bg-text {
+    position: absolute;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 200px;
+    letter-spacing: -4px;
+    white-space: nowrap;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 48%, #000 100%), linear-gradient(90deg, #fff 0%, #fff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    z-index: 1;
+    pointer-events: none;
+    text-align: center;
+}
+
+.sec-01-bg-text:not(.bottom-text) {
+    top: 274px;
+}
+
+.sec-01-bg-text.bottom-text {
+    top: 394px;
+    z-index: 3;
+}
+
+.sec-01-lens {
+    position: absolute;
+    top: -28px;
+    width: 1050px;
+    height: 700px;
+    z-index: 2;
+    transform: rotate(-23.68deg);
+}
+
+.sec-01-lens img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sec-01-titles {
+    position: absolute;
+    top: 800px;
+    z-index: 3;
+    text-align: center;
+}
+
+.sec-01-titles h2 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.sec-01-titles p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    max-width: 613px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* SECTION 2 */
+.sec-02 {
+    min-height: 800px;
+    justify-content: center;
+    padding: 100px 100px;
+}
+
+.sec-02-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1600px;
+    position: relative;
+}
+
+.sec-02-text {
+    width: 50%;
+    padding-top: 100px;
+}
+
+.sec-02-text h2 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 1.2;
+    margin-bottom: 200px;
+}
+
+.sec-02-text p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.5;
+    max-width: 560px;
+}
+
+.sec-02-image {
+    width: 703px;
+    height: 420px;
+    position: absolute;
+    right: -100px;
+    top: 100px;
+}
+
+.sec-02-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+/* SECTION 3 */
+.sec-03 {
+    min-height: 900px;
+    justify-content: center;
+    margin-top: 150px; /* spacing to prevent overlap */
+}
+
+.sec-03-circle {
+    width: 900px;
+    height: 905px;
+    position: absolute;
+}
+
+.sec-03-circle img {
+    width: 100%;
+    height: 100%;
+}
+
+.sec-03-title {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: -50px;
+}
+
+.sec-03-title .subtitle {
+    font-family: 'Dune Rise', sans-serif;
+    font-size: 16px;
+    color: #8b8b8b;
+    margin-bottom: 5px;
+}
+
+.sec-03-title h2 {
+    font-family: 'Dune Rise', sans-serif;
+    font-size: 64px;
+}
+
+/* SECTION 4 */
+.sec-04 {
+    padding: 100px 0;
+}
+
+.sec-04-header {
+    width: 100%;
+    padding-left: 116px;
+    margin-bottom: 50px;
+}
+
+.sec-04-header h2 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    color: #555;
+    max-width: 600px;
+    line-height: 1.2;
+    margin-bottom: 30px;
+}
+
+.sec-04-header h2 span {
+    color: #fff;
+}
+
+.sec-04-header p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #666;
+    max-width: 564px;
+    line-height: 1.2;
+}
+
+.sec-04-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+    min-height: 1000px;
+}
+
+.main-hand {
+    width: 100%;
+    height: auto;
+}
+
+.feature-point {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-point .line-svg,
+.feature-point .num-img {
+    margin-bottom: 15px;
+}
+
+.img-01 { width: 88.495px; height: 47px; }
+.img-02 { width: 102.537px; height: 45.911px; }
+.img-03 { width: 103.293px; height: 45.117px; }
+.img-04 { width: 104.674px; height: 51.116px; }
+.img-05 { width: 103.827px; height: 45.117px; }
+
+.feature-point .feature-text {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    line-height: 1.2;
+}
+
+.feature-point .feature-text strong {
+    font-weight: normal;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.feature-point .feature-text strong .feat-num {
+    font-size: 0.6em; /* You can adjust the size of the numbers 01, 02 here */
+    color: #999;
+}
+
+.feature-point .feature-text p {
+    font-weight: normal;
+}
+
+/* Exact positioning for Section 4 points (approx based on percentages) */
+.pt-1 { top: 180px; left: 16%; }
+.pt-2 { top: 50px; left: 66%; }
+.pt-3 { top: 230px; left: 41%; }
+.pt-4 { top: 410px; left: 25%; }
+.pt-5 { top: 840px; left: 75%; }
+
+/* SECTION 5 */
+.sec-05 {
+    padding: 100px 0;
+    position: relative;
+    min-height: 900px;
+}
+
+.glass-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-50%) scale(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+.sec-05-content {
+    display: flex;
+    width: 100%;
+    max-width: 1600px;
+    transition: opacity 0.4s ease;
+}
+
+.sec-05-content.fade-out {
+    opacity: 0;
+}
+
+.prod-sec-title {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    margin-bottom: 150px;
+}
+
+/* Remove duplicated .sec-05-content rule */
+
+.sec-05-left {
+    width: 50%;
+    padding-left: 98px;
+    position: relative;
+}
+
+.line-svg-large {
+    width: 383px;
+    height: 225px;
+    margin-bottom: 30px;
+}
+
+.sec-05-left h2 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    font-size: 40px;
+    margin-bottom: 200px;
+    line-height: 1.2;
+}
+
+.sec-05-left .desc {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    max-width: 557px;
+    line-height: 1.4;
+    margin-bottom: 50px;
+}
+
+.sec-05-features {
+    display: flex;
+    gap: 40px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.sec-05-features .feat:first-child {
+    font-size: 20px;
+}
+
+.sec-05-right {
+    width: 50%;
+    position: absolute;
+    right: -100px;
+    top: 50px;
+}
+
+.sec-05-right img {
+    width: 100%;
+    max-width: 1600px;
+    object-fit: cover;
+}
+
+/* SECTION 6: Pricing */
+.sec-06 {
+    padding: 100px 0;
+    background-color: #000;
+}
+
+.sec-06-header {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.sec-06-header h2 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.sec-06-header p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    color: #7f7f7f;
+    max-width: 665px;
+    margin: 0 auto;
+}
+
+.pricing-cards {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+}
+
+.price-card {
+    background-color: #121212;
+    border-radius: 20px;
+    width: 416px;
+    padding: 50px;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.price-card h3 {
+    font-weight: 500;
+    font-size: 18px;
+    color: #99a1af;
+    margin-bottom: 20px;
+}
+
+.price-card .price {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.price-card .price .amount {
+    font-size: 48px;
+}
+
+.price-card .price .unit {
+    font-size: 16px;
+    color: #99a1af;
+}
+
+.price-card .monthly {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.price-card .monthly .amount {
+    font-size: 24px;
+    color: #d1d5dc;
+}
+
+.price-card .monthly .unit {
+    font-size: 16px;
+    color: #6a7282;
+}
+
+.best-for {
+    margin-bottom: 30px;
+}
+
+.best-for .lbl {
+    display: block;
+    font-size: 14px;
+    color: #99a1af;
+    margin-bottom: 5px;
+}
+
+.best-for .val {
+    display: block;
+    font-size: 16px;
+    color: #fff;
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 60px;
+}
+
+.features-list li {
+    font-size: 16px;
+    color: #d1d5dc;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.check-icon {
+    width: 14px;
+    height: 14px;
+    stroke: #8d8d8d;
+}
+
+.btn-start {
+    display: block;
+    background-color: #d1d5dc; /* Grayish by default */
+    color: #000;
+    text-align: center;
+    border-radius: 25px;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    position: absolute;
+    bottom: 50px;
+    width: calc(100% - 100px);
+    transition: background-color 0.3s ease;
+}
+
+.btn-start:hover {
+    background-color: #ffffff; /* White on hover */
+}
+
+.popular-tag {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #000;
+    font-size: 16px;
+    padding: 3px 20px;
+    border-radius: 15px;
+}
+
+/* SECTION 7 */
+.sec-07 {
+    padding: 100px 0;
+    position: relative;
+    min-height: 1000px;
+}
+
+.sec-07-title {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+    position: absolute;
+    top: 500px;
+    width: 100%;
+    z-index: 10;
+}
+
+.photo-grid {
+    position: relative;
+    width: 100%;
+    height: 950px;
+}
+
+.photo-grid img {
+    position: absolute;
+    object-fit: cover;
+}
+
+.p1 {
+    width: 552px;
+    height: 473px;
+    left: 100px;
+    top: 0;
+}
+
+.p2 {
+    width: 1136px;
+    height: 473px;
+    left: calc(100px + 552px + 20px);
+    top: 0;
+}
+
+.p3 {
+    width: 552px;
+    height: 472px;
+    left: 100px;
+    top: 490px;
+}
+
+.p4 {
+    width: 552px;
+    height: 471px;
+    left: calc(100px + 552px + 20px);
+    top: 490px;
+}
+
+.p5 {
+    width: 552px;
+    height: 471px;
+    left: calc(100px + 552px + 20px + 552px + 20px);
+    top: 490px;
+}
