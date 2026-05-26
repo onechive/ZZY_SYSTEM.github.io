@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, observerOptions);
 
-    const revealElements = document.querySelectorAll('.reveal-up');
+    const revealElements = document.querySelectorAll('.reveal-up, .reveal-up-centered');
     revealElements.forEach(el => observer.observe(el));
 
     // 3. Spotlight Effect on Section 2 (Company Text)
@@ -144,4 +144,25 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
+
+    // 6. Responsive Scaling for product.html Figma Container
+    function adjustFigmaScale() {
+        const container = document.querySelector('.figma-container');
+        const viewport = document.querySelector('.figma-viewport');
+        if (!container || !viewport) return;
+
+        const baseWidth = 1920;
+        const baseHeight = 11206;
+        const viewportWidth = window.innerWidth;
+
+        const scale = Math.min(1, viewportWidth / baseWidth);
+
+        container.style.transform = `translateX(-50%) scale(${scale})`;
+        container.style.transformOrigin = 'top center';
+        viewport.style.height = `${baseHeight * scale}px`;
+    }
+
+    adjustFigmaScale();
+    window.addEventListener('resize', adjustFigmaScale);
+    window.addEventListener('load', adjustFigmaScale);
 });
