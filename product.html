@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NERVISION 1 - ZZY SYSTEM</title>
-    <meta name="description" content="A synthetic vision lens engineered to extend human perception. Enter the new vision.">
-    <link rel="stylesheet" href="style_v4.css">
+    <title>NERVISION - ZZY SYSTEM</title>
+    <meta name="description" content="NERVISION: Reconstructed visual organ for artificial perception">
+    <link rel="stylesheet" href="project.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.cdnfonts.com/css/dune-rise" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-
-<body class="product-page-body">
+<body>
     <canvas id="mouse-canvas"></canvas>
 
     <!-- Header & Navigation -->
@@ -35,502 +33,555 @@
         </div>
     </header>
 
-    <!-- Main Viewport Wrapper to handle scaling and centering -->
     <div class="figma-viewport">
-        <!-- Main Absolute Figma Container -->
-        <div class="figma-container">
-        
-        <!-- Background Ellipses (Glows) -->
-        <div class="ellipse-bg-6"></div>
-        <div class="ellipse-bg-7"></div>
-        <div class="ellipse-bg-8"></div>
-        <div class="ellipse-bg-6-top"></div>
+        <div class="figma-container" id="figma-root">
 
-        <!-- Section 1: Hero -->
-        <div class="hero-gradient-overlay"></div>
-        
-        <p class="hero-title-1 reveal-up-centered">SEE BEYOND</p>
-        
-        <div class="hero-lens-container">
-            <div class="lens-rotator">
-                <img src="assets/2d6305055dbb30b7709aca224ea5fbb4e05bb6ba.png" alt="NERVISION 1 Lens" class="lens-img-main">
+            <!-- ===== BACKGROUND GLOW ELLIPSES ===== -->
+
+            <!-- Ellipse 9 - top left glow (node 105:59) -->
+            <div id="node-105-59" class="ellipse-glow" style="width:1421px;height:1421px;left:calc(50% - 991.5px - 710.5px);top:514px;">
+                <img alt="" src="Assets/603e7d6cf571c9470dadc7dcf983621c325aa38e.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
             </div>
-        </div>
 
-        <p class="hero-title-2 reveal-up">THE HUMAN EYE</p>
-        <p class="hero-tagline reveal-up">ENTER THE NEW VISION</p>
-        <p class="hero-desc reveal-up-centered">A synthetic vision lens engineered to extend human perception, detect hidden patterns, and reveal what ordinary eyes cannot read.</p>
-
-        <!-- Section 2: Problem Statement -->
-        <p class="problem-desc reveal-up">It misses subtle movements, fails in darkness, loses detail under pressure, and cannot read the invisible signals surrounding the body. In a world filled with data, danger, and microscopic change, the natural eye is no longer enough.</p>
-        <div class="problem-vector reveal-up">
-            <img src="assets/331bfedf168cfd0396d382b545dbc37deeb45270.svg" alt="">
-        </div>
-        <div class="problem-image-frame reveal-up">
-            <div class="frame-inner">
-                <div class="img-overflow">
-                    <img src="assets/886c1b688c7a2dd8972c8ca9e20f27bc96e3d8b8.png" alt="Diagnostic Scan">
-                </div>
-                <div class="frame-gradient"></div>
+            <!-- Ellipse 7 - center glow (node 105:69) -->
+            <div id="node-105-69" class="ellipse-glow" style="width:1857px;height:1857px;left:calc(50% - 40.5px - 928.5px);top:1744px;">
+                <img alt="" src="Assets/0056285828346e1acee47218d8a0605bed2620d5.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
             </div>
-            <div class="frame-shadow"></div>
-        </div>
 
-        <!-- Section 3: Rings Focus & Feature Badges -->
-        <!-- Center Dashboard Concentric Rings -->
-        <div class="focus-dashboard-container reveal-up">
-            <img class="dashboard-ring ring-ellipse-12" src="assets/4ad99f9d89f15b24b29c2581ab8031ca642690d0.svg" alt="">
-            <img class="dashboard-ring ring-ellipse-13" src="assets/f143ed73ba557125ece7a359951d6359b98dc230.svg" alt="">
-            <img class="dashboard-ring ring-ellipse-14" src="assets/0e7cf04a77856d905638a024c21004edd8f2ab26.svg" alt="">
-            <img class="dashboard-ring ring-ellipse-15-1" src="assets/5a941695904c031af859c742bfd2d9480c9c4812.svg" alt="">
-            <img class="dashboard-ring ring-ellipse-15-2" src="assets/5a941695904c031af859c742bfd2d9480c9c4812.svg" alt="">
-            <img class="dashboard-ring ring-ellipse-15-3" src="assets/5a941695904c031af859c742bfd2d9480c9c4812.svg" alt="">
-            <img class="dashboard-ring ring-ellipse-15-4" src="assets/5a941695904c031af859c742bfd2d9480c9c4812.svg" alt="">
-        </div>
-
-        <!-- Center Ring Text -->
-        <p class="focus-ring-subtitle reveal-up">See BEYON THE HUMAN EYE</p>
-        <p class="focus-ring-title reveal-up">NERVISION 1</p>
-
-        <!-- Focus Text Details -->
-        <p class="focus-title-section reveal-up">A New Organ for the Age of Artificial Perception</p>
-        <p class="focus-desc-section reveal-up">
-            NERVISION is not a contact lens.
-            <br>
-            It is a reconstructed visual organ — designed to assist, 
-            <br>
-            enhance, and reinterpret what the eye receives.
-            <br>
-            All feature of NERVISON
-        </p>
-        <p class="focus-tagline-section reveal-up">
-            It does not replace your sight.
-            <br>
-            It upgrades the way you understand it.
-        </p>
-
-        <!-- Robotic Arms (Hands) Background -->
-        <div class="focus-hands-bg reveal-up-centered">
-            <div class="hands-floater">
-                <img src="assets/736a0b992a3aca2e3e83708c53d84205707c87d1.png" alt="Robotic Hands">
+            <!-- Ellipse 8 - center glow 2 (node 109:355) -->
+            <div id="node-109-355" class="ellipse-glow" style="width:1329px;height:1329px;left:calc(50% + 3.5px - 664.5px);top:2008px;">
+                <img alt="" src="Assets/237847d37a05867b6cc1e976528ec5ddab13cbec.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
             </div>
-        </div>
 
-        <!-- Feature 01 Tag -->
-        <div class="badge-shape badge-shape-1 reveal-up">
-            <img src="assets/09bd15022a3d84114e508221a4be6a4e239da518.svg" alt="">
-        </div>
-        <p class="badge-text badge-text-1 reveal-up">
-            Low-Light Amplification
-            <br><br>
-            Enhances vision in dark or unstable 
-            <br>
-            environments without external devices.
-        </p>
+            <!-- Frame 45 - large SVG orbital ring (node 112:808) -->
+            <div id="node-112-808" style="overflow:visible;">
+                <img alt="" src="Assets/99d8017fde0af4a3aeb4f247e7ed48e93b5f4650.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;">
+            </div>
 
-        <!-- Feature 02 Tag -->
-        <div class="badge-shape badge-shape-2 reveal-up reveal-delay-1">
-            <img src="assets/467ae814b5dc89e82cbe1571a38b22d9702fa7ea.svg" alt="">
-        </div>
-        <p class="badge-text badge-text-2 reveal-up reveal-delay-1">
-            Micro-Motion Detection
-            <br><br>
-            Detects subtle movement patterns 
-            <br>
-            invisible to the natural eye.
-        </p>
+            <!-- ===== HERO SECTION ===== -->
 
-        <!-- Feature 03 Tag -->
-        <div class="badge-shape badge-shape-3 reveal-up reveal-delay-2">
-            <img src="assets/ebc912b43ff198d4c72dfd8ffe11a6264cc6fdd0.svg" alt="">
-        </div>
-        <p class="badge-text badge-text-3 reveal-up reveal-delay-2">
-            Depth Recalibration
-            <br><br>
-            Reconstructs spatial depth to support 
-            <br>
-            more accurate distance perception.
-        </p>
+            <!-- SEE BEYOND text (node 105:25) -->
+            <p id="node-105-25">SEE BEYOND</p>
 
-        <!-- Feature 04 Tag -->
-        <div class="badge-shape badge-shape-4 reveal-up reveal-delay-3">
-            <img src="assets/3b50533d293a508e797f50547cf173496569611c.svg" alt="">
-        </div>
-        <p class="badge-text badge-text-4 reveal-up reveal-delay-3">
-            Signal Overlay Interface
-            <br><br>
-            Displays processed visual data as a 
-            <br>
-            minimal layer over the user’s field of view.
-        </p>
+            <!-- Gradient overlay (node 105:55) -->
+            <div id="node-105-55"></div>
 
-        <!-- Feature 05 Tag -->
-        <div class="badge-shape badge-shape-5 reveal-up reveal-delay-4">
-            <img src="assets/a8fc4156d8ea6bd4fd606b4868cee4d1ee376335.svg" alt="">
-        </div>
-        <p class="badge-text badge-text-5 reveal-up reveal-delay-4">
-            Adaptive Eye Sync
-            <br><br>
-            Learns the user’s visual rhythm and 
-            <br>
-            adapts to individual perception patterns.
-        </p>
-
-
-        <!-- Section 4: Three Steps to Synthetic Sight -->
-        <!-- Step 01 -->
-        <div class="step-line-1 step-line-1-s1"></div>
-        <div class="step-line-4 step-line-4-s1"></div>
-        <div class="step-line-2 step-line-2-s1"></div>
-        <div class="step-line-3-container step-line-3-s1"></div>
-        <div class="step-line-5-container step-line-5-s1"></div>
-        
-        <div class="step-badge-shape step-badge-shape-s1">
-            <img src="assets/712b70979dd446e78ddd5e9dc1c0941daf8cabab.svg" alt="">
-        </div>
-        
-        <p class="step-section-title step-section-title-s1 reveal-up">Three Steps to Synthetic Sight</p>
-        <p class="step-num-title step-num-title-s1 reveal-up">STEP 01 SCAN</p>
-        <p class="step-desc-text step-desc-text-s1 reveal-up">
-            NERVISION begins by scanning the surrounding environment through its synthetic optical layer. It collects light, motion, depth, surface texture, temperature shifts, and biological micro-signals that the natural eye cannot fully detect. Instead of simply enlarging what you already see, NERVISION captures the hidden structure behind the visible world.
-        </p>
-        
-        <p class="step-label step-label-core-s1">CORE<br>FUNCTION</p>
-        <p class="step-label step-label-light-s1">LIGHT<br>DENSITY</p>
-        <p class="step-label step-label-motion-s1">MOTION<br>FREQUENCY</p>
-        <p class="step-label step-label-spatial-s1">SPATIAL<br>DEPTH</p>
-        <p class="step-label step-label-lowlight-s1">LOW-LIGHT<br>PATTERNS</p>
-        
-        <!-- Step 01 Icons -->
-        <div class="step-icon step-icon-bulb-s1">
-            <img src="assets/56b755c099f099bb541581f1b2db4c0fc05b66bf.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-motion-s1">
-            <img src="assets/4880cd78bf47baeca9eefd055cfdfec530eb97f6.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-night-s1">
-            <img src="assets/704747ea8a54671a5530d0e91214fd4f010ba0a1.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-sensor-s1">
-            <img src="assets/cb880d21b2d3d5126fa0da101d894ad29324d37c.svg" alt="">
-        </div>
-        
-        <!-- Step 01 Image -->
-        <div class="step-image-container step-image-container-s1 reveal-up">
-            <img src="assets/3565ec5af75f09a296a0ec3afc8a525c09ce48af.png" alt="Scan Image">
-        </div>
-
-        <!-- Step 02 -->
-        <div class="step-line-1 step-line-1-s2"></div>
-        <div class="step-line-2 step-line-2-s2"></div>
-        <div class="step-line-3-container step-line-3-s2"></div>
-        <div class="step-line-5-container step-line-5-s2"></div>
-        
-        <div class="step-badge-shape step-badge-shape-s2">
-            <img src="assets/018eea2577842f46dfd67ffed6f8c49623b6aa5f.svg" alt="">
-        </div>
-        
-        <p class="step-num-title step-num-title-s2 reveal-up">STEP 02 INTERPRET</p>
-        <p class="step-desc-text step-desc-text-s2 reveal-up">
-            After scanning, NERVISION filters visual noise and converts fragmented signals into structured information.
-            <br><br>
-            The lens separates what is important from what is distracting, identifying movement patterns, hidden risks, unstable surfaces, and visual blind spots in real time.
-        </p>
-        
-        <p class="step-label step-label-core-s2">CORE<br>FUNCTION</p>
-        <p class="step-label step-label-noise-s2">NOISE<br>REDUCTION</p>
-        <p class="step-label step-label-threat-s2">THREAT<br>RECOGNITION</p>
-        <p class="step-label step-label-compress-s2">VISUAL DATA<br>COMPRESSION</p>
-        
-        <!-- Step 02 Icons -->
-        <div class="step-icon step-icon-noise-s2">
-            <img src="assets/2ef625e8c47b5f7e931b6f222672bc71301e4b18.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-threat-s2">
-            <img src="assets/a58f6db3249c818b188a937a6cc64315c4091ce8.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-data-s2">
-            <img src="assets/ffee630a90779394a639c4dac7ac796d31948f0d.svg" alt="">
-        </div>
-        
-        <!-- Step 02 Image -->
-        <div class="step-image-container step-image-container-s2 reveal-up">
-            <img src="assets/f963626a8f5b96c7e2afa71678137467ee412398.png" alt="Interpret Image">
-        </div>
-
-        <!-- Step 03 -->
-        <div class="step-line-1 step-line-1-s3"></div>
-        <div class="step-line-2 step-line-2-s3"></div>
-        <div class="step-line-3-container step-line-3-s3"></div>
-        <div class="step-line-5-container step-line-5-s3"></div>
-        
-        <div class="step-badge-shape step-badge-shape-s3">
-            <img src="assets/c4654871180302a7479638255e867922258058ed.svg" alt="">
-        </div>
-        
-        <p class="step-num-title step-num-title-s3 reveal-up">STEP 03 Process</p>
-        <p class="step-desc-text step-desc-text-s3 reveal-up">
-            NERVISION projects the processed information back into the user’s field of view as a minimal visual overlay.
-            <br><br>
-            The interface appears only when needed, allowing the user to recognize direction, distance, motion, and environmental changes without interrupting natural sight.
-        </p>
-        
-        <p class="step-label step-label-core-s3">CORE<br>FUNCTION</p>
-        <p class="step-label step-label-marker-s3">DIRECTION<br>MARKERS</p>
-        <p class="step-label step-label-pulse-s3">SIGNAL<br>PULSES</p>
-        <p class="step-label step-label-risk-s3">RISK<br>INDICATORS</p>
-        
-        <!-- Step 03 Icons -->
-        <div class="step-icon step-icon-marker-s3">
-            <img src="assets/d259186d71140eb6f9ab819d97dd2effdcfba119.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-pulse-s3">
-            <img src="assets/fc5e2dba69715d5563a964e88e3ce3187c1fa5eb.svg" alt="">
-        </div>
-        <div class="step-icon step-icon-asterisk-s3">
-            <img src="assets/81b14be03e61568e3e087e8c41972d9a5ef40b8d.svg" alt="">
-        </div>
-        
-        <!-- Step 03 Image -->
-        <div class="step-image-container step-image-container-s3 reveal-up">
-            <img src="assets/d40f3eb8b8bf7bff7b63af259b46280f38cca310.png" alt="Process Image">
-        </div>
-
-
-        <!-- Section 5: Pricing Section -->
-        <p class="pricing-title reveal-up-centered">Choose your NERVISION Protocol</p>
-        <p class="pricing-footnote-top reveal-up-centered">Each plan includes the core lens device, calibration support, maintenance coverage, and perception upgrades based on the level of care you need.</p>
-        
-        <!-- Pricing Cards Container -->
-        <div class="pricing-cards-flex">
-            
-            <!-- CORE Card -->
-            <div class="price-card-box reveal-up">
-                <div class="price-card-header">
-                    <p class="price-plan-name">NERVISION CORE</p>
-                    <p class="price-device-text">
-                        <span class="price-large">$1,490</span>
-                        <span class="price-sub-label">Device</span>
-                    </p>
-                    <p class="price-care-text">
-                        <span class="price-medium">$39/mo</span>
-                        <span class="price-sub-label-dark">Care</span>
-                    </p>
-                </div>
-                <div class="price-card-badge">
-                    <p class="badge-title">Best For</p>
-                    <p class="badge-value">First-time users</p>
-                </div>
-                <div class="price-features-list">
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Basic neural integration</p>
+            <!-- Rotating product image (node 105:18) -->
+            <div id="node-105-18-wrapper">
+                <div id="node-105-18-rotate">
+                    <div id="node-105-18">
+                        <img alt="" src="img2/2d6305055dbb30b7709aca224ea5fbb4e05bb6ba.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
                     </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Standard vision enhancement</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">24/7 customer support</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Monthly software updates</p>
-                    </div>
-                </div>
-                <div class="price-card-button">
-                    <p class="button-label">Get Start</p>
                 </div>
             </div>
 
-            <!-- PLUS (Popular) Card -->
-            <div class="price-card-box price-card-box-popular reveal-up reveal-delay-1">
-                <div class="popular-tab">
-                    <p class="popular-tab-text">Popular</p>
+            <!-- THE HUMAN EYE text (node 105:26) -->
+            <p id="node-105-26">THE HUMAN EYE</p>
+
+            <!-- Hero subtitle block (node 112:811) -->
+            <div id="node-112-811">
+                <p id="node-105-47">ENTER THE NEW VISION</p>
+                <p id="node-105-49">A synthetic vision lens engineered to extend human perception, detect hidden patterns, and reveal what ordinary eyes cannot read.</p>
+            </div>
+
+            <!-- ===== SECTION 2: HUMAN EYE LIMITATIONS ===== -->
+
+            <!-- Gray card frame (node 105:57) -->
+            <div id="node-105-57">
+                <div class="absolute-fill" style="border-radius:5px;overflow:hidden;">
+                    <img alt="" src="img2/886c1b688c7a2dd8972c8ca9e20f27bc96e3d8b8.png" style="position:absolute;top:-7.28%;left:0;width:100%;height:176.25%;max-width:none;">
                 </div>
-                <div class="price-card-header">
-                    <p class="price-plan-name">NERVISION PLUS</p>
-                    <p class="price-device-text">
-                        <span class="price-large">$2,490</span>
-                        <span class="price-sub-label">Device</span>
-                    </p>
-                    <p class="price-care-text">
-                        <span class="price-medium">$79/mo</span>
-                        <span class="price-sub-label-dark">Care</span>
-                    </p>
+                <div class="absolute-fill" style="border-radius:5px;background:linear-gradient(180deg,rgba(102,102,102,0.2) 0%,rgba(63,63,63,0.2) 25%,rgba(0,0,0,0.2) 36%,rgba(0,0,0,0.2) 69%,rgba(63,63,63,0.2) 103%,rgba(102,102,102,0.2) 110%),linear-gradient(90deg,rgba(18,18,18,0.4) 0%,rgba(18,18,18,0.4) 100%),linear-gradient(90deg,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%);"></div>
+                <div class="absolute-fill" style="border-radius:5px;box-shadow:inset 0px 4px 5px 1px rgba(59,58,58,0.25);"></div>
+            </div>
+
+            <!-- THE Human Eye Was Never Built for Everything (node 113:831) -->
+            <p id="node-113-831">THE Human Eye Was<br>Never Built for Everything</p>
+
+            <!-- Body text (node 105:62) -->
+            <p id="node-105-62">It misses subtle movements, fails in darkness, loses detail under pressure, and cannot read the invisible signals surrounding the body. In a world filled with data, danger, and microscopic change, the natural eye is no longer enough. </p>
+
+            <!-- image 759 - large eye image (node 105:9) -->
+            <div id="node-105-9">
+                <img alt="" src="img2/736a0b992a3aca2e3e83708c53d84205707c87d1.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            </div>
+
+            <!-- ===== SECTION 3: NERVISION DESCRIPTION ===== -->
+
+            <!-- Glow for this section (node 112:800) -->
+            <div id="node-112-800" class="ellipse-glow" style="width:1421px;height:1421px;left:calc(50% - 916.5px - 710.5px);top:3764px;">
+                <img alt="" src="Assets/603e7d6cf571c9470dadc7dcf983621c325aa38e.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Right text block (node 112:797) -->
+            <div id="node-112-797">
+                <div id="node-112-796">
+                    <p id="node-105-71">A New Organ for the Age of Artificial Perception</p>
+                    <p id="node-105-74">It does not replace your sight.<br>It upgrades the way you understand it.</p>
                 </div>
-                <div class="price-card-badge">
-                    <p class="badge-title">Best For</p>
-                    <p class="badge-value">Advanced everyday use</p>
+                <p id="node-105-72">NERVISION is not a contact lens.<br>It is a reconstructed visual organ — designed to assist, <br>enhance, and reinterpret what the eye receives.<br>All feature of NERVISON</p>
+            </div>
+
+            <!-- Feature 1: Low-Light Amplification (node 112:803) -->
+            <div id="node-112-803">
+                <div id="node-105-127">
+                    <img alt="" src="Assets/c2733459e348045aa0cff0eaa3f891ecece104ca.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
                 </div>
-                <div class="price-features-list">
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Advanced neural processing</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Enhanced vision algorithms</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Priority support</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Weekly software updates</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Advanced customization</p>
-                    </div>
+                <p id="node-105-126">Low-Light Amplification<br><br>Enhances vision in dark or unstable <br>environments without external devices.</p>
+            </div>
+
+            <!-- Feature 2: Micro-Motion Detection (node 112:799) -->
+            <div id="node-112-799">
+                <div id="node-105-132">
+                    <img alt="" src="Assets/5da3b52ca490513d6d4dd465b2ea6cebc0a3a64b.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
                 </div>
-                <div class="price-card-button price-card-button-popular">
-                    <p class="button-label button-label-popular">Get Start</p>
+                <p id="node-105-131">Micro-Motion Detection<br><br>Detects subtle movement patterns <br>invisible to the natural eye.</p>
+            </div>
+
+            <!-- Feature 3: Depth Recalibration (node 112:805) -->
+            <div id="node-112-805">
+                <div id="node-105-118">
+                    <img alt="" src="Assets/fcd64c7c42cab3e743639ffb13dc6924ea3d1b83.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                </div>
+                <div id="node-105-123">
+                    <p style="line-height:1;margin:0;">Depth Recalibration<br><br></p>
+                    <p style="line-height:1;margin:0;">Reconstructs spatial depth to support <br>more accurate distance perception.</p>
                 </div>
             </div>
 
-            <!-- ELITE Card -->
-            <div class="price-card-box reveal-up reveal-delay-2">
-                <div class="price-card-header">
-                    <p class="price-plan-name">NERVISION ELITE</p>
-                    <p class="price-device-text">
-                        <span class="price-large">$4,900</span>
-                        <span class="price-sub-label">Device</span>
-                    </p>
-                    <p class="price-care-text">
-                        <span class="price-medium">$149/mo</span>
-                        <span class="price-sub-label-dark">Care</span>
-                    </p>
+            <!-- Feature 4: Signal Overlay Interface (node 112:804) -->
+            <div id="node-112-804">
+                <div id="node-105-119">
+                    <img alt="" src="Assets/e111b6522b22229ed9e4ddc1b62f0d1d602d6c7f.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
                 </div>
-                <div class="price-card-badge">
-                    <p class="badge-title">Best For</p>
-                    <p class="badge-value">Full synthetic perception</p>
+                <p id="node-105-124">Signal Overlay Interface<br><br>Displays processed visual data as a <br>minimal layer over the user's field of view.</p>
+            </div>
+
+            <!-- Feature 5: Adaptive Eye Sync (node 112:798) -->
+            <div id="node-112-798">
+                <div id="node-105-120">
+                    <img alt="" src="Assets/989d2dc56a3b15221842c5f8f80c68c61949d183.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
                 </div>
-                <div class="price-features-list">
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Premium neural integration</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Complete vision suite</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Dedicated support team</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Real-time updates</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Full customization access</p>
-                    </div>
-                    <div class="price-feature-item">
-                        <div class="feature-icon-check">
-                            <img src="assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" alt="">
-                        </div>
-                        <p class="feature-item-text">Beta feature access</p>
-                    </div>
-                </div>
-                <div class="price-card-button">
-                    <p class="button-label">Get Start</p>
+                <p id="node-105-125">Adaptive Eye Sync<br><br>Learns the user's visual rhythm and <br>adapts to individual perception patterns.</p>
+            </div>
+
+            <!-- ===== PRODUCT SHOWCASE: NERVISION 1 ===== -->
+
+            <!-- NERVISION product name block (node 112:806) -->
+            <div id="node-112-806">
+                <p id="node-109-353">See BEYON THE HUMAN EYE</p>
+                <p id="node-109-352">NERVISION 1</p>
+            </div>
+
+            <!-- Ellipse 9 - bottom-right glow for gallery section (node 114:833 area) -->
+
+            <!-- ===== SECTION 4: THREE STEPS - STEP 01 SCAN ===== -->
+
+            <!-- Subtract shape 5 (node 105:154) -->
+            <div id="node-105-154">
+                <img alt="" src="Assets/712b70979dd446e78ddd5e9dc1c0941daf8cabab.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Vector 8 horizontal line (node 112:772) -->
+            <div id="node-112-772">
+                <img alt="" src="Assets/8ab07bf627b4ef49b2944546159805a727675bb3.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Step 01 text (node 106:157) -->
+            <p id="node-106-157">Three Steps to Synthetic Sight</p>
+
+            <!-- Step 01 title (node 106:158) -->
+            <p id="node-106-158">STEP 01 SCAN</p>
+
+            <!-- Step 01 description (node 106:159) -->
+            <p id="node-106-159">NERVISION begins by scanning the surrounding environment through its synthetic optical layer. It collects light, motion, depth, surface texture, temperature shifts, and biological micro-signals that the natural eye cannot fully detect. Instead of simply enlarging what you already see, NERVISION captures the hidden structure behind the visible world.</p>
+
+            <!-- image 768 (node 107:171) -->
+            <div id="node-107-171">
+                <div class="absolute-fill" style="overflow:hidden;">
+                    <img alt="" src="img2/3565ec5af75f09a296a0ec3afc8a525c09ce48af.png" style="position:absolute;left:-12.8%;top:-0.01%;width:112.8%;height:100.02%;max-width:none;">
                 </div>
             </div>
 
-        </div>
-
-
-        <!-- Section 6: Photo Gallery Layout -->
-        <div class="gallery-border-gradient">
-            <img src="assets/756314c9d1ef9ca44ac83377c45ba7e7e56cae0f.svg" alt="">
-        </div>
-
-        <div class="gallery-image-wide reveal-up">
-            <img src="assets/cae5232746f64a25af05cf57540a1ff3aec5062b.png" alt="Clinical prep 1">
-        </div>
-        <div class="gallery-image-square-1 reveal-up">
-            <img src="assets/fc3829f3a693191755e3d3008645baa32375a9f3.png" alt="Clinical prep 2">
-        </div>
-
-        <p class="gallery-banner-desc reveal-up-centered">
-            NERVISION does not change what exists
-            <br>
-            It changes what the body is able to perceive
-        </p>
-
-        <!-- Three-image Row -->
-        <div class="gallery-three-row-flex reveal-up-centered">
-            <div class="gallery-row-item-frame">
-                <div class="frame-inner-overflow">
-                    <img src="assets/d7734d83d598743f5a4329127b413ce301a8d6fc.png" alt="" class="row-item-image-offset">
+            <!-- Step 01 Core Function icons (node 112:785) -->
+            <div id="node-112-785">
+                <p id="node-108-214">Core<br>Function</p>
+                <div id="node-112-782">
+                    <!-- Light Density -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-108-192">
+                            <div style="position:absolute;top:10.42%;right:6.04%;bottom:8.33%;left:6.04%;">
+                                <img alt="" src="Assets/56b755c099f099bb541581f1b2db4c0fc05b66bf.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Light<br>Density</p>
+                    </div>
+                    <!-- Motion Frequency -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-108-195">
+                            <div style="position:absolute;top:8.29%;right:8.37%;bottom:8.33%;left:8.29%;">
+                                <img alt="" src="Assets/4880cd78bf47baeca9eefd055cfdfec530eb97f6.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Motion<br>Frequency</p>
+                    </div>
+                    <!-- Spatial Depth -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-108-207">
+                            <div style="position:absolute;top:8.33%;right:8.33%;bottom:8.33%;left:8.33%;">
+                                <img alt="" src="Assets/cb880d21b2d3d5126fa0da101d894ad29324d37c.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Spatial<br>Depth</p>
+                    </div>
+                    <!-- Low-light Patterns -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-108-212">
+                            <div style="position:absolute;top:8.33%;right:8.33%;bottom:8.33%;left:8.33%;">
+                                <img alt="" src="Assets/704747ea8a54671a5530d0e91214fd4f010ba0a1.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Low-light<br>Patterns</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-row-item">
-                <img src="assets/48baf2163092b5f559172b1b041c045c44c31e4f.png" alt="">
-            </div>
-            <div class="gallery-row-item">
-                <img src="assets/b4dc9c8708e174f583ec7de9ba1dd91abcf8c61e.png" alt="">
-            </div>
-        </div>
 
-        <!-- Section 7: Footer -->
-        <div class="bottom-gradient-fade"></div>
-        
-        <!-- Clickable Footer Logo wrapped in a link to index.html -->
-        <a href="index.html" class="footer-logo-link">
-            <div class="footer-logo-block">
-                <div class="footer-logo-img-wrapper">
-                    <img src="assets/4caa3595b9de987f4e62e4659a0b25cfaa9fc0dc.png" alt="ZZY Logo">
+            <!-- ===== STEP 02 INTERPRET ===== -->
+
+            <!-- Subtract shape 6 (node 106:164) -->
+            <div id="node-106-164">
+                <img alt="" src="Assets/018eea2577842f46dfd67ffed6f8c49623b6aa5f.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Vector 8 line (node 112:770) -->
+            <div id="node-112-770">
+                <img alt="" src="Assets/8ab07bf627b4ef49b2944546159805a727675bb3.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Step 02 texts -->
+            <p id="node-107-184">Three Steps to Synthetic Sight</p>
+            <p id="node-107-185">STEP 02 INTERPRET</p>
+            <p id="node-107-186">After scanning, NERVISION filters visual noise and converts fragmented signals into structured information.<br><br>The lens separates what is important from what is distracting, identifying movement patterns, hidden risks, unstable surfaces, and visual blind spots in real time.</p>
+
+            <!-- image 770 (node 108:200) -->
+            <div id="node-108-200">
+                <div class="absolute-fill" style="overflow:hidden;">
+                    <img alt="" src="img2/f963626a8f5b96c7e2afa71678137467ee412398.png" style="position:absolute;left:-14.21%;top:0;width:114.21%;height:100%;max-width:none;">
                 </div>
-                <div class="footer-logo-letter z-1">Z</div>
-                <div class="footer-logo-letter z-2">Z</div>
-                <div class="footer-logo-letter y">Y</div>
-                <div class="footer-logo-system-text">SYSTEM</div>
             </div>
-        </a>
 
-        <p class="footer-copyright-text">
-            © 2026 ZZY CYBERNETICS
-            <br>
-            ALL RIGHTS RETAINED BY THE SYSTEM
-        </p>
+            <!-- Step 02 Core Function icons (node 112:789) -->
+            <div id="node-112-789">
+                <p id="node-108-220">Core<br>Function</p>
+                <div id="node-112-788">
+                    <!-- Noise Reduction -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-109-232">
+                            <img alt="" src="Assets/2ef625e8c47b5f7e931b6f222672bc71301e4b18.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                        </div>
+                        <p class="core-icon-label">Noise<br>Reduction</p>
+                    </div>
+                    <!-- Threat Recognition -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-109-236">
+                            <div style="position:absolute;inset:0 0.02% -0.01% 0;">
+                                <img alt="" src="Assets/a58f6db3249c818b188a937a6cc64315c4091ce8.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Threat<br>Recognition</p>
+                    </div>
+                    <!-- Visual DATA Compression -->
+                    <div class="core-icon-group" style="width:91px;">
+                        <div class="core-icon" id="node-109-242">
+                            <div style="position:absolute;top:8.33%;right:8.33%;bottom:8.33%;left:8.33%;">
+                                <div style="position:absolute;inset:-2.4%;">
+                                    <img alt="" src="Assets/ffee630a90779394a639c4dac7ac796d31948f0d.svg" style="display:block;width:100%;height:100%;max-width:none;">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Visual DATA<br>Compression</p>
+                    </div>
+                </div>
+            </div>
 
-        </div> <!-- End figma-container -->
-    </div> <!-- End figma-viewport -->
+            <!-- ===== STEP 03 PROCESS ===== -->
 
-    <script src="script_v4.js"></script>
+            <!-- Subtract shape 7 (node 106:167) -->
+            <div id="node-106-167">
+                <img alt="" src="Assets/c4654871180302a7479638255e867922258058ed.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Vector 8 line (node 112:775) -->
+            <div id="node-112-775">
+                <img alt="" src="Assets/8ab07bf627b4ef49b2944546159805a727675bb3.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- Step 03 texts -->
+            <p id="node-107-187">Three Steps to Synthetic Sight</p>
+            <p id="node-107-188">STEP 03 Process</p>
+            <p id="node-107-189">NERVISION projects the processed information back into the user's field of view as a minimal visual overlay.<br><br>The interface appears only when needed, allowing the user to recognize direction, distance, motion, and environmental changes without interrupting natural sight.</p>
+
+            <!-- image 771 (node 109:347) -->
+            <div id="node-109-347">
+                <div class="absolute-fill" style="overflow:hidden;">
+                    <img alt="" src="img2/d40f3eb8b8bf7bff7b63af259b46280f38cca310.png" style="position:absolute;left:-6.71%;top:0;width:106.71%;height:100%;max-width:none;">
+                </div>
+            </div>
+
+            <!-- Step 03 Core Function icons (node 112:793) -->
+            <div id="node-112-793">
+                <p id="node-108-224">Core<br>Function</p>
+                <div id="node-112-792">
+                    <!-- Direction Markers -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-109-338">
+                            <div style="position:absolute;top:8.33%;right:12.5%;bottom:8.33%;left:12.5%;">
+                                <img alt="" src="Assets/d259186d71140eb6f9ab819d97dd2effdcfba119.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Direction<br>Markers</p>
+                    </div>
+                    <!-- Signal Pulses -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-109-341">
+                            <div style="position:absolute;top:12.5%;right:12.5%;bottom:12.5%;left:12.5%;">
+                                <img alt="" src="Assets/fc5e2dba69715d5563a964e88e3ce3187c1fa5eb.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Signal<br>Pulses</p>
+                    </div>
+                    <!-- Risk Indicators -->
+                    <div class="core-icon-group">
+                        <div class="core-icon" id="node-109-344">
+                            <div style="position:absolute;top:8.33%;right:8.33%;bottom:8.33%;left:8.33%;">
+                                <div style="position:absolute;inset:-2.4%;">
+                                    <img alt="" src="Assets/81b14be03e61568e3e087e8c41972d9a5ef40b8d.svg" style="display:block;width:100%;height:100%;max-width:none;">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="core-icon-label">Risk<br>Indicators</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- See NERVISION 1 CTA (node 112:806, placed here again at end of step section) -->
+            <!-- Already placed above near hero section -->
+
+            <!-- ===== PRICING SECTION ===== -->
+
+            <!-- Ellipse 6 glow for pricing (node 110:373) -->
+            <div class="ellipse-glow" style="position:absolute;width:1421px;height:1421px;left:calc(50% - 960.5px - 710.5px);top:-739px;pointer-events:none;z-index:0;">
+                <img alt="" src="Assets/603e7d6cf571c9470dadc7dcf983621c325aa38e.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;">
+            </div>
+
+            <!-- "Choose your NERVISION Protocol" heading (node 110:369) -->
+            <p id="node-110-369">Choose your NERVISION Protocol</p>
+
+            <!-- Subtitle text (node 111:385) -->
+            <p id="node-111-385">Each plan includes the core lens device, calibration support, maintenance coverage, and perception upgrades based on the level of care you need.</p>
+
+            <!-- ===== THREE PRICING CARDS (node 112:631) ===== -->
+            <div id="node-112-631">
+
+                <!-- CORE card (node 112:512) -->
+                <div id="node-112-512">
+                    <div id="node-112-513">
+                        <p id="node-112-514">NERVISION CORE</p>
+                        <p id="node-112-515"><span class="price-big">$1,490</span><span class="price-unit-gray">Device</span></p>
+                        <p id="node-112-516"><span class="price-mid">$39/mo </span><span class="price-unit-dark">Care</span></p>
+                    </div>
+                    <div id="node-112-517">
+                        <div id="node-112-518">
+                            <p id="node-112-519">Best For</p>
+                        </div>
+                        <div id="node-112-520">
+                            <p id="node-112-521">First-time users</p>
+                        </div>
+                    </div>
+                    <div id="node-112-522">
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text"><p class="list-text-p">Basic neural integration</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text"><p class="list-text-p">Standard vision enhancement</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text"><p class="list-text-p">24/7 customer support</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text"><p class="list-text-p">Monthly software updates</p></div>
+                        </div>
+                    </div>
+                    <div id="node-112-543">
+                        <p id="node-112-544">Get Start</p>
+                    </div>
+                </div>
+
+                <!-- PLUS card (node 112:546) - highlighted -->
+                <div id="node-112-546">
+                    <div id="node-112-547">
+                        <p id="node-112-548">Popular</p>
+                    </div>
+                    <div id="node-112-549">
+                        <p id="node-112-550">NERVISION PLUS</p>
+                        <p id="node-112-551"><span class="price-big">$2,490</span><span class="price-unit-gray">Device</span></p>
+                        <p id="node-112-552"><span class="price-mid">$79/mo </span><span class="price-unit-dark">Care</span></p>
+                    </div>
+                    <div id="node-112-553">
+                        <div id="node-112-554">
+                            <p id="node-112-555">Best For</p>
+                        </div>
+                        <div id="node-112-556">
+                            <p id="node-112-557">Advanced everyday use</p>
+                        </div>
+                    </div>
+                    <div id="node-112-558">
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:205px;"><p class="list-text-p">Advanced neural processing</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:199px;"><p class="list-text-p">Enhanced vision algorithms</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:112px;"><p class="list-text-p">Priority support</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:183px;"><p class="list-text-p">Weekly software updates</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:178px;"><p class="list-text-p">Advanced customization</p></div>
+                        </div>
+                    </div>
+                    <div id="node-112-584">
+                        <p id="node-112-585">Get Start</p>
+                    </div>
+                </div>
+
+                <!-- ELITE card (node 112:587) -->
+                <div id="node-112-587">
+                    <div id="node-112-588">
+                        <p id="node-112-589">NERVISION ELITE</p>
+                        <p id="node-112-590"><span class="price-big">$4,900</span><span class="price-unit-gray">Device</span></p>
+                        <p id="node-112-591"><span class="price-mid">$149/mo</span><span class="price-unit-dark">Care</span></p>
+                    </div>
+                    <div id="node-112-592">
+                        <div id="node-112-593">
+                            <p id="node-112-594">Best For</p>
+                        </div>
+                        <div id="node-112-595">
+                            <p id="node-112-596">Full synthetic perception</p>
+                        </div>
+                    </div>
+                    <div id="node-112-597">
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:195px;"><p class="list-text-p">Premium neural integration</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:155px;"><p class="list-text-p">Complete vision suite</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:175px;"><p class="list-text-p">Dedicated support team</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:132px;"><p class="list-text-p">Real-time updates</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:186px;"><p class="list-text-p">Full customization access</p></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon"><img alt="" src="Assets/4eaf19f8dd4aa8cabf88131ce2c02d0bccf4c9f0.svg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></div>
+                            <div class="list-text" style="width:143px;"><p class="list-text-p">Beta feature access</p></div>
+                        </div>
+                    </div>
+                    <div id="node-112-628">
+                        <p id="node-112-629">Get Start</p>
+                    </div>
+                </div>
+
+            </div><!-- end pricing cards -->
+
+            <!-- ===== GALLERY SECTION ===== -->
+
+            <!-- Top gradient fade-in above gallery (mirrors the bottom footer gradient) -->
+            <div id="node-gallery-top-gradient"></div>
+
+            <!-- image 776 left (node 110:383) -->
+            <div id="node-110-383">
+                <img alt="" src="img2/fc3829f3a693191755e3d3008645baa32375a9f3.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            </div>
+
+            <!-- image 775 right (node 110:380) -->
+            <div id="node-110-380">
+                <img alt="" src="img2/cae5232746f64a25af05cf57540a1ff3aec5062b.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            </div>
+
+            <!-- Three-image gallery row (node 110:368) -->
+            <div id="node-110-368">
+                <!-- image 774 (node 110:366) -->
+                <div id="node-110-366">
+                    <div class="absolute-fill" style="overflow:hidden;">
+                        <img alt="" src="img2/d7734d83d598743f5a4329127b413ce301a8d6fc.png" style="position:absolute;left:-16.39%;top:0;width:128.26%;height:100%;max-width:none;">
+                    </div>
+                </div>
+                <!-- image 773 (node 110:361) -->
+                <div id="node-110-361">
+                    <img alt="" src="img2/48baf2163092b5f559172b1b041c045c44c31e4f.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                </div>
+                <!-- image 772 (node 110:358) -->
+                <div id="node-110-358">
+                    <img alt="" src="img2/b4dc9c8708e174f583ec7de9ba1dd91abcf8c61e.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                </div>
+                <!-- Natural gradient overlay -->
+                <div id="node-110-368-overlay"></div>
+            </div>
+
+            <!-- "NERVISION does not change" quote overlaid on top of images (node 109:356) -->
+            <p id="node-109-356">NERVISION does not change what exists<br>It changes what the body is able to perceive</p>
+
+            <!-- ===== FOOTER GRADIENT ===== -->
+            <div id="node-112-652"></div>
+
+            <!-- ===== FOOTER ===== -->
+            <div id="node-112-632">
+                <div id="node-112-633"></div>
+
+                <!-- Logo area (node 112:634) -->
+                <div id="node-112-634">
+                    <div id="node-112-635">
+                        <div class="absolute-fill" style="overflow:hidden;">
+                            <img alt="" src="img2/4caa3595b9de987f4e62e4659a0b25cfaa9fc0dc.png" style="position:absolute;left:-52.8%;top:-27.22%;width:208.7%;height:212.66%;max-width:none;">
+                        </div>
+                    </div>
+                    <div id="node-112-636"><p style="line-height:18px;margin:0;">Z</p></div>
+                    <div id="node-112-637"><p style="line-height:18px;margin:0;">Z</p></div>
+                    <div id="node-112-638"><p style="line-height:18px;margin:0;">Y</p></div>
+                    <div id="node-112-639"><p style="line-height:28.8px;margin:0;">SYSTEM</p></div>
+                </div>
+
+                <!-- Footer text (node 112:640) -->
+                <div id="node-112-640">
+                    <p style="line-height:20px;margin:0;">© 2026 ZZY CYBERNETICS</p>
+                    <p style="line-height:20px;margin:0;">ALL RIGHTS RETAINED BY THE SYSTEM</p>
+                </div>
+            </div>
+
+        </div><!-- end figma-container -->
+    </div><!-- end figma-viewport -->
+
+    <script src="product.js"></script>
 </body>
-
 </html>
