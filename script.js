@@ -29,6 +29,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const revealElements = document.querySelectorAll('.reveal-up');
     revealElements.forEach(el => observer.observe(el));
 
+    // 2.5 Header Scroll Reveal with Stagger
+    const headerNavItems = document.querySelectorAll('.nav-menu ul li');
+    if (headerNavItems.length > 0) {
+        headerNavItems.forEach(item => item.classList.add('nav-reveal'));
+        
+        const headerObserver = new IntersectionObserver((entries) => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stagger = 120; // default stagger ms
+                    headerNavItems.forEach((item, index) => {
+                        if (prefersReducedMotion) {
+                            item.classList.add('visible');
+                        } else {
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, index * stagger);
+                        }
+                    });
+                } else {
+                    // Optional: remove visible class when off-screen to allow re-reveal
+                    headerNavItems.forEach(item => item.classList.remove('visible'));
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const headerNavContainer = document.querySelector('.nav-menu ul');
+        if(headerNavContainer) {
+            headerObserver.observe(headerNavContainer);
+        }
+    }
+
     // 3. Spotlight Effect on Section 2 (Company Text)
     const companySection = document.querySelector('.company');
     const companyText = document.querySelector('.company-text-spotlight');
@@ -212,4 +244,64 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // 8. Stagger Reveal Animation for texts
+    class StaggerReveal {
+        constructor(element) {
+            this.element = element;
+            this.delay = parseInt(this.element.dataset.delay) || 60; 
+            this.prepare();
+        }
+        
+        prepare() {
+            const textNodes = [];
+            const walker = document.createTreeWalker(this.element, NodeFilter.SHOW_TEXT, null, false);
+            let node;
+            while(node = walker.nextNode()) {
+                if (node.nodeValue.trim() !== '') {
+                    textNodes.push(node);
+                }
+            }
+            
+            let letterCount = 0;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
+            textNodes.forEach(textNode => {
+                const text = textNode.nodeValue;
+                const fragment = document.createDocumentFragment();
+                
+                const words = text.split(/(\s+)/); 
+                
+                words.forEach(word => {
+                    if (word.trim() === '') {
+                        fragment.appendChild(document.createTextNode(word));
+                    } else {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.style.display = 'inline-flex';
+                        wordSpan.style.overflow = 'hidden';
+                        wordSpan.style.verticalAlign = 'bottom';
+                        
+                        word.split('').forEach(char => {
+                            const charSpan = document.createElement('span');
+                            charSpan.className = 'stagger-char';
+                            charSpan.textContent = char;
+                            if (!prefersReducedMotion) {
+                                charSpan.style.transitionDelay = `${letterCount * this.delay}ms`;
+                            }
+                            wordSpan.appendChild(charSpan);
+                            letterCount++;
+                        });
+                        
+                        fragment.appendChild(wordSpan);
+                    }
+                });
+                
+                textNode.parentNode.replaceChild(fragment, textNode);
+            });
+        }
+    }
+
+    const staggerTargets = document.querySelectorAll('.stagger-reveal');
+    staggerTargets.forEach(el => new StaggerReveal(el));
+
 });

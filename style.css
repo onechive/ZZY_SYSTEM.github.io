@@ -118,6 +118,26 @@ img {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Header Scroll Reveal */
+.nav-reveal {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.nav-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-reveal {
+        transition: none !important;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Hero Section */
 .hero {
     position: relative;
@@ -942,7 +962,7 @@ footer {
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% + 200px);
+    height: calc(100% + 300px);
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     transform: translateY(100%);
     z-index: 1;
@@ -971,13 +991,13 @@ footer {
 /* Hover effects */
 .researcher-slice[data-target="team-2"]:hover .g1,
 .researcher-slice[data-target="team-6"]:hover .g2 {
-    transform: translateY(-200px);
+    transform: translateY(-300px);
 }
 
 .researcher-slice[data-target="team-2"]:hover .name1,
 .researcher-slice[data-target="team-6"]:hover .name2 {
     opacity: 1;
-    top: -150px;
+    top: -280px;
 }
 
 /* Lobby Section */
@@ -1079,6 +1099,41 @@ footer {
 .lobby-bottom-text.right-align {
     width: 225px;
     text-align: right;
+}
+
+.lobby-desc-ko {
+    color: #b7b7b7;
+    font-family: "Helvetica Neue", "Inter", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+    margin-bottom: 25px;
+    letter-spacing: -0.5px;
+    word-break: keep-all;
+}
+
+/* 8. Stagger Reveal Component Styles */
+.stagger-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(110%);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.2, 1),
+        transform 0.7s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.active .stagger-char,
+.stagger-char.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stagger-char {
+        transition: none !important;
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .lobby-num {

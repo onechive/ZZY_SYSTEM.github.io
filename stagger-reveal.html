@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stagger Reveal Component</title>
+    <!--
+    Core Idea: 
+    This component creates a typography rhythm where letters enter one after another.
+    It works by parsing text nodes, wrapping each word in an `overflow: hidden` container, 
+    and wrapping each letter in a span. The letters are initially translated down (110%) 
+    and become visible when an `.active` or `.visible` class is appended to their parent.
+    A calculated `transition-delay` staggers the animation per letter.
+    -->
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Helvetica Neue', 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: left;
+            line-height: 1.4;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* 
+         * Component Styles 
+         * Ensure you define these in your global CSS
+         */
+        .stagger-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(110%);
+            /* Tunable parameter: duration (default 700ms) */
+            transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.2, 1), 
+                        transform 0.7s cubic-bezier(0.2, 0.9, 0.2, 1);
+        }
+
+        .active .stagger-char,
+        .stagger-char.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .stagger-char {
+                transition: none !important;
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Target Element -->
+    <!-- Tunable parameter: delay (e.g. data-delay="30") -->
+    <div class="container stagger-reveal" data-delay="30" id="reveal-target">
+        CLICK ME TO REVEAL.<br><br>Letters enter one after another — rhythm and choreography in copy. 
+        It safely parses paragraphs while maintaining natural word wrapping and spaces.
+    </div>
+
+    <script>
+        class StaggerReveal {
+            constructor(element) {
+                this.element = element;
+                // Tunable parameters
+                this.delay = parseInt(this.element.dataset.delay) || 60; 
+                this.prepare();
+            }
+            
+            prepare() {
+                const textNodes = [];
+                // Find all text nodes inside the element
+                const walker = document.createTreeWalker(this.element, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while(node = walker.nextNode()) {
+                    if (node.nodeValue.trim() !== '') {
+                        textNodes.push(node);
+                    }
+                }
+                
+                let letterCount = 0;
+                
+                textNodes.forEach(textNode => {
+                    const text = textNode.nodeValue;
+                    const fragment = document.createDocumentFragment();
+                    
+                    // Split by words to keep spaces native and maintain wrapping
+                    const words = text.split(/(\s+)/); 
+                    
+                    words.forEach(word => {
+                        if (word.trim() === '') {
+                            fragment.appendChild(document.createTextNode(word));
+                        } else {
+                            const wordSpan = document.createElement('span');
+                            wordSpan.style.display = 'inline-flex';
+                            wordSpan.style.overflow = 'hidden';
+                            wordSpan.style.verticalAlign = 'bottom';
+                            
+                            word.split('').forEach(char => {
+                                const charSpan = document.createElement('span');
+                                charSpan.className = 'stagger-char';
+                                charSpan.textContent = char;
+                                // Per-glyph delay calculation
+                                charSpan.style.transitionDelay = `${letterCount * this.delay}ms`;
+                                wordSpan.appendChild(charSpan);
+                                letterCount++;
+                            });
+                            
+                            fragment.appendChild(wordSpan);
+                        }
+                    });
+                    
+                    textNode.parentNode.replaceChild(fragment, textNode);
+                });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const targets = document.querySelectorAll('.stagger-reveal');
+            targets.forEach(el => new StaggerReveal(el));
+
+            // Demo trigger logic
+            const container = document.getElementById('reveal-target');
+            container.addEventListener('click', () => {
+                container.classList.toggle('active');
+            });
+            // Initial trigger
+            setTimeout(() => container.classList.add('active'), 500);
+        });
+    </script>
+</body>
+</html>

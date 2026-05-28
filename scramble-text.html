@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scramble Text Effect</title>
+    <!--
+    Core Idea: 
+    This component creates a "hacker reveal" effect by replacing characters with random symbols, 
+    gradually settling on the final target text. It safely parses HTML, meaning embedded tags 
+    (like <br> or <span>) are preserved and only the inner text nodes are scrambled. 
+    It respects `prefers-reduced-motion` to skip the animation for users who prefer it.
+    -->
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Space Grotesk', 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .scramble-text {
+            font-size: 2rem;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .scramble-text span.highlight {
+            color: #00ffcc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scramble-text" id="target" data-speed="35" data-settle="80">
+        Three Steps to Synthetic Sight<br><span class="highlight">STEP 01 SCAN</span>
+    </div>
+
+    <script>
+        class ScrambleText {
+            constructor(element) {
+                this.element = element;
+                this.chars = '!<>-_\\\\/[]{}—=+*^?#_ABCDE0123';
+                // Tunable parameters
+                this.speedMs = parseInt(this.element.dataset.speed) || 35;
+                this.duration = parseInt(this.element.dataset.duration) || 1000; 
+                this.update = this.update.bind(this);
+            }
+
+            setText(newHTML) {
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReducedMotion) {
+                    this.element.innerHTML = newHTML;
+                    return;
+                }
+
+                // Create a detached DOM node to safely extract text nodes while preserving HTML structure
+                const temp = document.createElement('div');
+                temp.innerHTML = newHTML;
+                
+                this.queue = [];
+                const extractText = (node) => {
+                    if (node.nodeType === 3) { // Text node
+                        const text = node.nodeValue;
+                        if (text.trim().length > 0) {
+                            this.queue.push({
+                                node: node,
+                                text: text,
+                                length: text.length
+                            });
+                        }
+                    } else {
+                        node.childNodes.forEach(extractText);
+                    }
+                };
+                extractText(temp);
+                
+                this.element.innerHTML = '';
+                this.element.appendChild(temp);
+                
+                cancelAnimationFrame(this.frameRequest);
+                this.startTime = Date.now();
+                this.lastTime = this.startTime;
+                this.update();
+            }
+
+            update() {
+                const now = Date.now();
+                const elapsed = now - this.startTime;
+
+                if (now - this.lastTime >= this.speedMs) {
+                    this.lastTime = now;
+                    let allSettled = true;
+                    
+                    const progress = Math.min(elapsed / this.duration, 1);
+                    
+                    this.queue.forEach(q => {
+                        const settled = Math.floor(q.length * progress);
+                        
+                        if (settled < q.length) {
+                            allSettled = false;
+                            let display = '';
+                            for (let i = 0; i < q.length; i++) {
+                                if (i < settled) {
+                                    display += q.text[i];
+                                } else if (q.text[i] === ' ') {
+                                    display += ' '; // Don't scramble spaces
+                                } else {
+                                    display += this.chars[Math.floor(Math.random() * this.chars.length)];
+                                }
+                            }
+                            q.node.nodeValue = display;
+                        } else {
+                            q.node.nodeValue = q.text;
+                        }
+                    });
+                    
+                    if (progress >= 1 || allSettled) return;
+                }
+                
+                this.frameRequest = requestAnimationFrame(this.update);
+            }
+        }
+
+        // Initialize component
+        document.addEventListener('DOMContentLoaded', () => {
+            const target = document.getElementById('target');
+            const scrambler = new ScrambleText(target);
+            
+            // Initial animation
+            const initialHTML = target.innerHTML;
+            scrambler.setText(initialHTML);
+
+            // Click to repeat for demonstration
+            document.body.addEventListener('click', () => {
+                scrambler.setText(initialHTML);
+            });
+        });
+    </script>
+</body>
+</html>

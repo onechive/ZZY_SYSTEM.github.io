@@ -39,68 +39,203 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let currentStep = 0;
+    let isScrolling = false;
 
-    const prevBtn = document.getElementById('sec05-prev');
-    const nextBtn = document.getElementById('sec05-next');
-    
+    class ScrambleText {
+        constructor(el) {
+            this.el = el;
+            this.chars = '!<>-_\\\\/[]{}—=+*^?#_ABCDE0123';
+            this.update = this.update.bind(this);
+        }
+        
+        setText(newHTML, duration = 1000) {
+            const temp = document.createElement('div');
+            temp.innerHTML = newHTML;
+            this.queue = [];
+            const extractText = (node) => {
+                if (node.nodeType === 3) {
+                    const text = node.nodeValue;
+                    if (text.trim().length > 0) {
+                        this.queue.push({
+                            node: node,
+                            text: text,
+                            length: text.length
+                        });
+                    }
+                } else {
+                    node.childNodes.forEach(extractText);
+                }
+            };
+            extractText(temp);
+            
+            this.el.innerHTML = '';
+            this.el.appendChild(temp);
+            
+            cancelAnimationFrame(this.frameRequest);
+            this.speedMs = 35; 
+            this.duration = duration;
+            this.startTime = Date.now();
+            this.lastTime = this.startTime;
+            this.update();
+        }
+        
+        update() {
+            const now = Date.now();
+            const elapsed = now - this.startTime;
+
+            if (now - this.lastTime >= this.speedMs) {
+                this.lastTime = now;
+                let allSettled = true;
+                
+                const progress = Math.min(elapsed / this.duration, 1);
+                
+                this.queue.forEach(q => {
+                    const settled = Math.floor(q.length * progress);
+                    if (settled < q.length) {
+                        allSettled = false;
+                        let display = '';
+                        for (let i = 0; i < q.length; i++) {
+                            if (i < settled) {
+                                display += q.text[i];
+                            } else if (q.text[i] === ' ') {
+                                display += ' ';
+                            } else {
+                                display += this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                        q.node.nodeValue = display;
+                    } else {
+                        q.node.nodeValue = q.text;
+                    }
+                });
+                
+                if (progress >= 1 || allSettled) return;
+            }
+            this.frameRequest = requestAnimationFrame(this.update);
+        }
+    }
+
     const titleEl = document.getElementById('step-title');
     const descEl = document.getElementById('step-desc');
     const featuresEl = document.getElementById('step-features');
     const imageEl = document.getElementById('step-image');
     const bigImageEl = document.getElementById('step-big-image');
+    const sec05 = document.querySelector('.sec-05');
     
     // Check if elements exist before attaching listeners
-    if (prevBtn && nextBtn && titleEl && descEl && featuresEl && imageEl && bigImageEl) {
+    if (sec05 && titleEl && descEl && featuresEl && imageEl && bigImageEl) {
         
-        const updateContent = (index) => {
+        const titleScrambler = new ScrambleText(titleEl);
+        const descScrambler = new ScrambleText(descEl);
+
+        const contentWrap = document.getElementById('sec05-content-wrap');
+
+        const updateContent = (index, direction = 1) => {
             const data = sec05Data[index];
             
-            // Apply fade out effect
-            titleEl.style.opacity = 0;
-            descEl.style.opacity = 0;
-            featuresEl.style.opacity = 0;
-            imageEl.style.opacity = 0;
-            bigImageEl.style.opacity = 0;
+            // Clone current content wrap for out-animation
+            const clone = contentWrap.cloneNode(true);
+            clone.style.position = 'absolute';
+            clone.style.top = contentWrap.offsetTop + 'px';
+            clone.style.left = contentWrap.offsetLeft + 'px';
+            clone.style.width = contentWrap.offsetWidth + 'px';
+            clone.style.height = contentWrap.offsetHeight + 'px';
+            clone.style.margin = '0';
+            clone.style.zIndex = '1';
+            
+            // Overlay to darken the background
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = '#000';
+            overlay.style.opacity = '0';
+            overlay.style.zIndex = '2';
+            overlay.style.pointerEvents = 'none';
+            overlay.style.transition = 'opacity 0.8s ease';
+            
+            sec05.appendChild(clone);
+            sec05.appendChild(overlay);
+            
+            contentWrap.style.position = 'relative';
+            contentWrap.style.zIndex = '3';
+            
+            // Determine starting position based on scroll direction
+            const startY = direction > 0 ? 150 : -150;
+            const cloneEndY = direction > 0 ? -100 : 100;
+            
+            contentWrap.style.transition = 'none';
+            contentWrap.style.transform = `translateY(${startY}px)`;
+            contentWrap.style.opacity = '0';
+            
+            // Start scramble and update DOM
+            titleScrambler.setText(data.title, 1000);
+            descScrambler.setText(data.desc, 1000);
+            imageEl.src = data.image;
+            bigImageEl.src = data.bigImage;
+            
+            featuresEl.innerHTML = '';
+            data.features.forEach(feat => {
+                const div = document.createElement('div');
+                div.className = 'feat';
+                div.innerHTML = feat;
+                featuresEl.appendChild(div);
+            });
+            
+            // Ensure any previous inline opacity is cleared
+            titleEl.style.opacity = '';
+            descEl.style.opacity = '';
+            featuresEl.style.opacity = '';
+            imageEl.style.opacity = '';
+            bigImageEl.style.opacity = '';
+            
+            // Force reflow
+            void contentWrap.offsetWidth;
+            
+            // Animate new content in
+            contentWrap.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease';
+            contentWrap.style.transform = 'translateY(0)';
+            contentWrap.style.opacity = '1';
+            
+            // Animate old content and overlay out
+            overlay.style.opacity = '0.6';
+            clone.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease';
+            clone.style.transform = `translateY(${cloneEndY}px) scale(0.95)`;
+            clone.style.opacity = '0';
             
             setTimeout(() => {
-                // Update content
-                titleEl.innerHTML = data.title;
-                descEl.innerHTML = data.desc;
-                imageEl.src = data.image;
-                bigImageEl.src = data.bigImage;
-                
-                // Update features list
-                featuresEl.innerHTML = '';
-                data.features.forEach(feat => {
-                    const div = document.createElement('div');
-                    div.className = 'feat';
-                    div.innerHTML = feat;
-                    featuresEl.appendChild(div);
-                });
-                
-                // Apply fade in effect
-                titleEl.style.transition = 'opacity 0.4s ease';
-                descEl.style.transition = 'opacity 0.4s ease';
-                featuresEl.style.transition = 'opacity 0.4s ease';
-                imageEl.style.transition = 'opacity 0.4s ease';
-                bigImageEl.style.transition = 'opacity 0.4s ease';
-                
-                titleEl.style.opacity = 1;
-                descEl.style.opacity = 1;
-                featuresEl.style.opacity = 1;
-                imageEl.style.opacity = 1;
-                bigImageEl.style.opacity = 1;
-            }, 400); // match transition time
+                clone.remove();
+                overlay.remove();
+            }, 800);
         };
 
-        prevBtn.addEventListener('click', () => {
-            currentStep = (currentStep - 1 + sec05Data.length) % sec05Data.length;
-            updateContent(currentStep);
-        });
+        sec05.addEventListener('wheel', (e) => {
+            if (isScrolling) {
+                e.preventDefault();
+                return;
+            }
 
-        nextBtn.addEventListener('click', () => {
-            currentStep = (currentStep + 1) % sec05Data.length;
-            updateContent(currentStep);
-        });
+            if (e.deltaY > 0) {
+                // Scroll down
+                if (currentStep < sec05Data.length - 1) {
+                    e.preventDefault();
+                    isScrolling = true;
+                    currentStep++;
+                    updateContent(currentStep, 1);
+                    setTimeout(() => { isScrolling = false; }, 1000);
+                }
+            } else if (e.deltaY < 0) {
+                // Scroll up
+                if (currentStep > 0) {
+                    e.preventDefault();
+                    isScrolling = true;
+                    currentStep--;
+                    updateContent(currentStep, -1);
+                    setTimeout(() => { isScrolling = false; }, 1000);
+                }
+            }
+        }, { passive: false });
     }
 });
