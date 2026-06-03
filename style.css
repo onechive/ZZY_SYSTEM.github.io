@@ -981,11 +981,29 @@ footer {
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 100%;
     max-width: 200px;
     opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
     transition: opacity 0.4s ease, top 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 3;
+}
+
+.hover-info .profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #555;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.hover-info .name-img {
+    width: 80%;
+    height: auto;
 }
 
 /* Hover effects */
@@ -1002,7 +1020,7 @@ footer {
 
 /* Lobby Section */
 .lobby-section {
-    height: 250vh;
+    height: 450vh;
     position: relative;
     background-color: #111111;
 }

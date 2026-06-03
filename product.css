@@ -33,26 +33,34 @@
 
 .sec-01-bg-text {
     position: absolute;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 200px;
-    letter-spacing: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Dune Rise', sans-serif;
+    font-size: 100px;
+    letter-spacing: 2px;
     white-space: nowrap;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 48%, #000 100%), linear-gradient(90deg, #fff 0%, #fff 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    z-index: 1;
+    z-index: 4;
     pointer-events: none;
     text-align: center;
 }
 
 .sec-01-bg-text:not(.bottom-text) {
-    top: 274px;
+    top: 290px;
 }
 
 .sec-01-bg-text.bottom-text {
-    top: 394px;
-    z-index: 3;
+    top: 410px;
+    z-index: 4;
+}
+
+@media (max-width: 1440px) {
+    .sec-01-bg-text {
+        font-size: 7vw;
+    }
 }
 
 .sec-01-lens {
@@ -64,7 +72,8 @@
     transform: rotate(-23.68deg);
 }
 
-.sec-01-lens img {
+.sec-01-lens img,
+.sec-01-lens video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -148,7 +157,8 @@
 .sec-03 {
     min-height: 900px;
     justify-content: center;
-    margin-top: 150px; /* spacing to prevent overlap */
+    margin-top: 150px;
+    /* spacing to prevent overlap */
 }
 
 .sec-03-circle {
@@ -238,11 +248,30 @@
     margin-bottom: 15px;
 }
 
-.img-01 { width: 88.495px; height: 47px; }
-.img-02 { width: 102.537px; height: 45.911px; }
-.img-03 { width: 103.293px; height: 45.117px; }
-.img-04 { width: 104.674px; height: 51.116px; }
-.img-05 { width: 103.827px; height: 45.117px; }
+.img-01 {
+    width: 88.495px;
+    height: 47px;
+}
+
+.img-02 {
+    width: 102.537px;
+    height: 45.911px;
+}
+
+.img-03 {
+    width: 103.293px;
+    height: 45.117px;
+}
+
+.img-04 {
+    width: 104.674px;
+    height: 51.116px;
+}
+
+.img-05 {
+    width: 103.827px;
+    height: 45.117px;
+}
 
 .feature-point .feature-text {
     font-family: 'Helvetica Neue', sans-serif;
@@ -257,7 +286,8 @@
 }
 
 .feature-point .feature-text strong .feat-num {
-    font-size: 0.6em; /* You can adjust the size of the numbers 01, 02 here */
+    font-size: 0.6em;
+    /* You can adjust the size of the numbers 01, 02 here */
     color: #999;
 }
 
@@ -266,11 +296,30 @@
 }
 
 /* Exact positioning for Section 4 points (approx based on percentages) */
-.pt-1 { top: 180px; left: 16%; }
-.pt-2 { top: 50px; left: 66%; }
-.pt-3 { top: 230px; left: 41%; }
-.pt-4 { top: 410px; left: 25%; }
-.pt-5 { top: 840px; left: 75%; }
+.pt-1 {
+    top: 180px;
+    left: 16%;
+}
+
+.pt-2 {
+    top: 50px;
+    left: 66%;
+}
+
+.pt-3 {
+    top: 230px;
+    left: 41%;
+}
+
+.pt-4 {
+    top: 410px;
+    left: 25%;
+}
+
+.pt-5 {
+    top: 840px;
+    left: 75%;
+}
 
 /* SECTION 5 */
 .sec-05 {
@@ -353,6 +402,122 @@
     width: 100%;
     max-width: 1600px;
     object-fit: cover;
+}
+
+/* SECTION 5.5: Lens Case */
+.sec-lens-case {
+    width: 100%;
+    min-height: 100vh;
+    padding: 120px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    box-sizing: border-box;
+}
+
+.lens-case-container {
+    width: 95%;
+    max-width: 1600px;
+    display: grid;
+    grid-template-columns: 380px 1fr 380px;
+    gap: 60px;
+    align-items: stretch;
+    position: relative;
+}
+
+.text-top-left {
+    grid-column: 1;
+    align-self: start;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.3;
+    color: #fff;
+    padding-top: 40px;
+    transition: opacity 0.6s ease;
+}
+
+.text-bottom-right {
+    grid-column: 3;
+    align-self: end;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.3;
+    color: #fff;
+    text-align: right;
+    padding-bottom: 40px;
+    transition: opacity 0.6s ease;
+}
+
+.lens-video-wrapper {
+    grid-column: 2;
+    width: 100%;
+    max-height: 360px;
+    /* 이 값을 조절하여 영상의 잘리는 높이(아랫부분)를 조절할 수 있습니다 (예: 400px, 450px 등) */
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    /* 영상을 위쪽 기준으로 정렬하여 아랫부분이 잘리도록 설정 */
+    justify-content: center;
+}
+
+.lens-video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#lens-video-1 {
+    position: relative;
+    z-index: 1;
+}
+
+#lens-video-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateY(50px);
+    z-index: 2;
+}
+
+.lens-case-container.step-1 #lens-video-1 {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.lens-case-container.step-1 #lens-video-2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+    .lens-case-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .text-top-left {
+        grid-column: 1;
+        padding-top: 0;
+        text-align: center;
+    }
+
+    .lens-video-wrapper {
+        grid-column: 1;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .text-bottom-right {
+        grid-column: 1;
+        padding-bottom: 0;
+        text-align: center;
+    }
 }
 
 /* SECTION 6: Pricing */
@@ -477,7 +642,8 @@
 
 .btn-start {
     display: block;
-    background-color: #d1d5dc; /* Grayish by default */
+    background-color: #d1d5dc;
+    /* Grayish by default */
     color: #000;
     text-align: center;
     border-radius: 25px;
@@ -492,7 +658,8 @@
 }
 
 .btn-start:hover {
-    background-color: #ffffff; /* White on hover */
+    background-color: #ffffff;
+    /* White on hover */
 }
 
 .popular-tag {

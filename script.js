@@ -205,43 +205,67 @@ document.addEventListener("DOMContentLoaded", () => {
     // 7. Team Lobby Scroll Animation
     const lobbySection = document.getElementById('lobby-section');
     if (lobbySection) {
-        const photo1 = document.getElementById('lobby-photo-1');
-        const photo2 = document.getElementById('lobby-photo-2');
-        const info1top = document.getElementById('lobby-info-1-top');
-        const info1bot = document.getElementById('lobby-info-1-bottom');
-        const info2top = document.getElementById('lobby-info-2-top');
-        const info2bot = document.getElementById('lobby-info-2-bottom');
+        const photos = [
+            document.getElementById('lobby-photo-1'),
+            document.getElementById('lobby-photo-2'),
+            document.getElementById('lobby-photo-3'),
+            document.getElementById('lobby-photo-4')
+        ];
+        
+        const infosTop = [
+            document.getElementById('lobby-info-1-top'),
+            document.getElementById('lobby-info-2-top'),
+            document.getElementById('lobby-info-3-top'),
+            document.getElementById('lobby-info-4-top')
+        ];
+        
+        const infosBot = [
+            document.getElementById('lobby-info-1-bottom'),
+            document.getElementById('lobby-info-2-bottom'),
+            document.getElementById('lobby-info-3-bottom'),
+            document.getElementById('lobby-info-4-bottom')
+        ];
 
         window.addEventListener('scroll', () => {
             const rect = lobbySection.getBoundingClientRect();
             // rect.top is 0 when section hits the top of viewport
             const progress = -rect.top / window.innerHeight;
             
-            // 0 -> 0.5: scale down photo 1
-            if (progress > 0) {
-                photo1.classList.add('scaled');
-            } else {
-                photo1.classList.remove('scaled');
-            }
+            let activeIndex = 0;
+            if (progress >= 2.5) activeIndex = 3;
+            else if (progress >= 1.5) activeIndex = 2;
+            else if (progress >= 0.5) activeIndex = 1;
 
-            // 0.5 -> 1.0: crossfade to photo 2 and info 2
-            if (progress > 0.5) {
-                photo1.classList.remove('active');
-                if (info1top) info1top.classList.remove('active');
-                if (info1bot) info1bot.classList.remove('active');
-                photo2.classList.add('active');
-                if (info2top) info2top.classList.add('active');
-                if (info2bot) info2bot.classList.add('active');
-                photo2.classList.add('scaled');
-            } else {
-                photo1.classList.add('active');
-                if (info1top) info1top.classList.add('active');
-                if (info1bot) info1bot.classList.add('active');
-                photo2.classList.remove('active');
-                if (info2top) info2top.classList.remove('active');
-                if (info2bot) info2bot.classList.remove('active');
-                photo2.classList.remove('scaled');
-            }
+            photos.forEach((photo, idx) => {
+                if (photo) {
+                    if (idx === activeIndex) {
+                        photo.classList.add('active');
+                    } else {
+                        photo.classList.remove('active');
+                    }
+                    
+                    let scaleThreshold = (idx === 0) ? 0 : (idx - 0.5);
+                    if (progress > scaleThreshold) {
+                        photo.classList.add('scaled');
+                    } else {
+                        photo.classList.remove('scaled');
+                    }
+                }
+            });
+
+            infosTop.forEach((info, idx) => {
+                if (info) {
+                    if (idx === activeIndex) info.classList.add('active');
+                    else info.classList.remove('active');
+                }
+            });
+
+            infosBot.forEach((info, idx) => {
+                if (info) {
+                    if (idx === activeIndex) info.classList.add('active');
+                    else info.classList.remove('active');
+                }
+            });
         });
     }
 

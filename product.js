@@ -217,23 +217,115 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const rect = sec05.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            // Only activate scroll hijack when the section is comfortably in view
+            const threshold = viewHeight * 0.35;
+            const isActive = rect.top <= threshold && rect.bottom >= (viewHeight - threshold);
+
             if (e.deltaY > 0) {
                 // Scroll down
                 if (currentStep < sec05Data.length - 1) {
-                    e.preventDefault();
-                    isScrolling = true;
-                    currentStep++;
-                    updateContent(currentStep, 1);
-                    setTimeout(() => { isScrolling = false; }, 1000);
+                    if (isActive) {
+                        e.preventDefault();
+                        isScrolling = true;
+                        currentStep++;
+                        updateContent(currentStep, 1);
+                        setTimeout(() => { isScrolling = false; }, 1000);
+                    }
                 }
             } else if (e.deltaY < 0) {
                 // Scroll up
                 if (currentStep > 0) {
-                    e.preventDefault();
-                    isScrolling = true;
-                    currentStep--;
-                    updateContent(currentStep, -1);
-                    setTimeout(() => { isScrolling = false; }, 1000);
+                    if (isActive) {
+                        e.preventDefault();
+                        isScrolling = true;
+                        currentStep--;
+                        updateContent(currentStep, -1);
+                        setTimeout(() => { isScrolling = false; }, 1000);
+                    }
+                }
+            }
+        }, { passive: false });
+    }
+
+    // Section 5.5 Lens Case Interactive Scroll Logic
+    const secLensCase = document.querySelector('.sec-lens-case');
+    const lensContainer = document.querySelector('.lens-case-container');
+    const textLeft = document.getElementById('lens-text-left');
+    const textRight = document.getElementById('lens-text-right');
+
+    const lensData = [
+        {
+            left: "Its compact size<br>makes it convenient<br>to wear anywhere,<br>anytime",
+            right: "A special tool that can<br>be used indefinitely as<br>long as it isn't broken"
+        },
+        {
+            left: "NERVISION is kept in a specialized sterile container that continuously calibrates its nanotech components.",
+            right: "Removal from the case triggers immediate synchronization, preparing the organ for integration the moment it contacts the user's biological system."
+        }
+    ];
+
+    let lensStep = 0;
+    let isLensScrolling = false;
+
+    if (secLensCase && lensContainer && textLeft && textRight) {
+        
+        const updateLensStep = (step) => {
+            // Fade out text
+            textLeft.style.opacity = '0';
+            textRight.style.opacity = '0';
+            
+            setTimeout(() => {
+                textLeft.innerHTML = lensData[step].left;
+                textRight.innerHTML = lensData[step].right;
+                
+                // Fade in text
+                textLeft.style.opacity = '1';
+                textRight.style.opacity = '1';
+            }, 600); // Wait for text fade out (CSS is 0.6s)
+
+            // Toggle video state via CSS class
+            if (step === 1) {
+                lensContainer.classList.add('step-1');
+            } else {
+                lensContainer.classList.remove('step-1');
+            }
+        };
+
+        secLensCase.addEventListener('wheel', (e) => {
+            if (isLensScrolling) {
+                e.preventDefault();
+                return;
+            }
+
+            const rect = secLensCase.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            // Activate scroll hijack when mostly centered
+            const threshold = viewHeight * 0.25;
+            const isActive = rect.top <= threshold && rect.bottom >= (viewHeight - threshold);
+
+            if (e.deltaY > 0) {
+                // Scroll down
+                if (lensStep < 1) {
+                    if (isActive) {
+                        e.preventDefault();
+                        isLensScrolling = true;
+                        lensStep++;
+                        updateLensStep(lensStep);
+                        setTimeout(() => { isLensScrolling = false; }, 1000);
+                    }
+                }
+            } else if (e.deltaY < 0) {
+                // Scroll up
+                if (lensStep > 0) {
+                    if (isActive) {
+                        e.preventDefault();
+                        isLensScrolling = true;
+                        lensStep--;
+                        updateLensStep(lensStep);
+                        setTimeout(() => { isLensScrolling = false; }, 1000);
+                    }
                 }
             }
         }, { passive: false });
