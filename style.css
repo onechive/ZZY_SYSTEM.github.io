@@ -978,32 +978,71 @@ footer {
 
 .hover-info {
     position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 200px;
+    width: 450px;
+    max-width: none;
     opacity: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    transition: opacity 0.4s ease, top 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 3;
+    transition: opacity 0.4s ease;
+    z-index: 10;
 }
 
-.hover-info .profile-pic {
-    width: 80px;
-    height: 80px;
+.hover-info.name1 {
+    top: 35%;
+    left: 772px;
+    transform: translate(-50%, -50%);
+}
+
+.hover-info.name2 {
+    top: 35%;
+    left: -520px;
+    transform: translate(-50%, -50%);
+}
+
+.hover-info .name-img {
+    width: 100%;
+    height: auto;
+}
+
+.hover-profile {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.4s ease, top 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 11;
+}
+
+.hover-profile .profile-pic {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #555;
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
-.hover-info .name-img {
-    width: 80%;
-    height: auto;
+/* Base state for slices */
+.researcher-slice {
+    position: relative;
+    height: 100%;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+/* Ensure the hovered slice is rendered on top of the blurred siblings */
+.researcher-slice:hover {
+    z-index: 10;
+}
+
+/* Blur other slices when t2 or t6 is hovered */
+.researchers-container:has(.researcher-slice[data-target="team-2"]:hover) .researcher-slice:not([data-target="team-2"]),
+.researchers-container:has(.researcher-slice[data-target="team-6"]:hover) .researcher-slice:not([data-target="team-6"]) {
+    filter: blur(10px);
+    opacity: 0.6;
 }
 
 /* Hover effects */
@@ -1015,7 +1054,12 @@ footer {
 .researcher-slice[data-target="team-2"]:hover .name1,
 .researcher-slice[data-target="team-6"]:hover .name2 {
     opacity: 1;
-    top: -280px;
+}
+
+.researcher-slice[data-target="team-2"]:hover .p1,
+.researcher-slice[data-target="team-6"]:hover .p2 {
+    opacity: 1;
+    top: -180px;
 }
 
 /* Lobby Section */
