@@ -32,16 +32,23 @@
     </header>
 
     <!-- Section 1: Hero -->
-    <section class="hero reveal-up" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-gradient"></div>
-        <div class="hero-title">
-            <h1 class="system-text">
-                <span class="z1">Z</span>
-                <span class="z2">Z</span>
-                <span class="y">Y</span>
-                <span class="system">SYSTEM</span>
-            </h1>
+    <section class="hero" id="hero">
+        <div class="hero-sticky-container">
+            <div class="hero-bg-container">
+                <div class="hero-bg layer-0"></div>
+                <div class="hero-bg layer-1"></div>
+                <div class="hero-bg layer-2"></div>
+                <div class="hero-bg layer-3"></div>
+            </div>
+            <div class="hero-gradient"></div>
+            <div class="hero-title">
+                <h1 class="system-text" id="hero-system-text">
+                    <span class="z1">Z</span>
+                    <span class="z2">Z</span>
+                    <span class="y">Y</span>
+                    <span class="system">SYSTEM</span>
+                </h1>
+            </div>
         </div>
     </section>
 
@@ -75,127 +82,87 @@
     <!-- Section 4: Equipment -->
     <section class="equipment reveal-up">
         <h3>ZZY EQUIPMENT FOR TECHNOLOGY DEVELOPMENT</h3>
-        <div class="equipment-carousel-wrapper">
-            <div class="equipment-track">
-                <!-- Set 1 -->
-                <div class="eq-item">
-                    <img src="img/4-1.png" alt="Spine Implant">
-                    <div class="eq-overlay">
-                        <h4>Spine Implant V1</h4>
-                        <p>Neural link stabilization unit</p>
-                    </div>
+        <div class="equipment-slider-container">
+            <div class="equipment-slide-track" id="eqTrack">
+                <div class="eq-slide" style="background-image: url('img/4-1.png');">
+                    <div class="eq-desc"><h4>Spine Implant V1</h4><p>Neural link stabilization unit</p></div>
                 </div>
-                <div class="eq-item">
-                    <img src="img/4-2.png" alt="Arm Implant">
-                    <div class="eq-overlay">
-                        <h4>Arm Implant X</h4>
-                        <p>High-torque mechanical limbs</p>
-                    </div>
+                <div class="eq-slide" style="background-image: url('img/4-2.png');">
+                    <div class="eq-desc"><h4>Arm Implant X</h4><p>High-torque mechanical limbs</p></div>
                 </div>
-                <div class="eq-item">
-                    <img src="img/4-3.png" alt="Artificial Womb">
-                    <div class="eq-overlay">
-                        <h4>Bio-Incubator</h4>
-                        <p>Accelerated tissue growth</p>
-                    </div>
+                <div class="eq-slide" style="background-image: url('img/4-3.png');">
+                    <div class="eq-desc"><h4>Bio-Incubator</h4><p>Accelerated tissue growth</p></div>
                 </div>
-                <div class="eq-item">
-                    <img src="img/4-4.png" alt="Spine Implant 2">
-                    <div class="eq-overlay">
-                        <h4>Spine Interface</h4>
-                        <p>Direct nervous system sync</p>
-                    </div>
+                <div class="eq-slide" style="background-image: url('img/4-4.png');">
+                    <div class="eq-desc"><h4>Spine Interface</h4><p>Direct nervous system sync</p></div>
                 </div>
-                <!-- Set 2 (for infinite scrolling) -->
-                <div class="eq-item">
-                    <img src="img/4-1.png" alt="Spine Implant">
-                    <div class="eq-overlay">
-                        <h4>Spine Implant V1</h4>
-                        <p>Neural link stabilization unit</p>
-                    </div>
+                <div class="eq-slide" style="background-image: url('img/4-5.png');">
+                    <div class="eq-desc"><h4>Neural Optimizer</h4><p>Advanced synaptic acceleration</p></div>
                 </div>
-                <div class="eq-item">
-                    <img src="img/4-2.png" alt="Arm Implant">
-                    <div class="eq-overlay">
-                        <h4>Arm Implant X</h4>
-                        <p>High-torque mechanical limbs</p>
-                    </div>
-                </div>
-                <div class="eq-item">
-                    <img src="img/4-3.png" alt="Artificial Womb">
-                    <div class="eq-overlay">
-                        <h4>Bio-Incubator</h4>
-                        <p>Accelerated tissue growth</p>
-                    </div>
-                </div>
-                <div class="eq-item">
-                    <img src="img/4-4.png" alt="Spine Implant 2">
-                    <div class="eq-overlay">
-                        <h4>Spine Interface</h4>
-                        <p>Direct nervous system sync</p>
-                    </div>
-                </div>
+            </div>
+            
+            <div class="equipment-thumbnails">
+                <div class="eq-thumb" data-index="0"><img src="img/4-1.png" alt="Thumb 1"></div>
+                <div class="eq-thumb" data-index="1"><img src="img/4-2.png" alt="Thumb 2"></div>
+                <div class="eq-thumb" data-index="2"><img src="img/4-3.png" alt="Thumb 3"></div>
+                <div class="eq-thumb" data-index="3"><img src="img/4-4.png" alt="Thumb 4"></div>
+                <div class="eq-thumb" data-index="4"><img src="img/4-5.png" alt="Thumb 5"></div>
             </div>
         </div>
     </section>
 
     <!-- Section 5: Neuro-Synapse -->
     <section class="neuro reveal-up">
-        <!-- Background Track -->
-        <div class="neuro-track neuro-bg-track" id="neuroBgTrack">
-            <div class="neuro-slide">
-                <div class="neuro-bg pulse-anim-bg" style="background-image: url('img/5.png');"></div>
+        <div class="neuro-grid-container">
+            <!-- Left Side -->
+            <div class="neuro-left">
+                <div class="neuro-left-top">
+                    <p>ZZY System®<br>Cybernetic<br>Enhancement</p>
+                </div>
+                <div class="neuro-left-mid">
+                    <p>We build our neural links, we<br>run full-sync, and our<br>implants are always on.</p>
+                </div>
+                <div class="neuro-left-bottom">
+                    <img src="img/5.png" alt="Neuro Implants">
+                </div>
             </div>
-            <div class="neuro-slide">
-                <div class="neuro-bg pulse-anim-bg" style="background-image: url('img/5-1.png');"></div>
-            </div>
-        </div>
-
-        <!-- Fixed Gradient -->
-        <div class="neuro-gradient"></div>
-
-        <!-- Content Track -->
-        <div class="neuro-track neuro-content-track" id="neuroContentTrack">
-            <!-- Slide 0 Content -->
-            <div class="neuro-slide">
-                <div class="neuro-content">
-                    <h2>NEURO-SYNAPSE MESH</h2>
-                    <p class="subtitle">NEURO-INTERFACE / SYNAPSE-SYNC / SIGNAL-CONVERSION/ BIODATA-STREAM /
-                        NANOSCALE-LINK</p>
-                    <div class="desc-wrapper">
-                        <span class="plus-icon">+</span>
-                        <p class="desc">DESCRIPTION: WE INTEGRATE A NANOSCALE PARTICLE NETWORK ALONG THE SPINAL COLUMN
-                            TO SYNC
-                            THE CENTRAL NERVOUS SYSTEM WITH DIGITAL INTERFACES IN REAL-TIME. THIS TECHNOLOGY CONVERTS
-                            DISRUPTED
-                            NERVE SIGNALS INTO DIGITAL DATA, ALLOWING YOU TO CONTROL EXTERNAL DEVICES AS INTUITIVE
-                            EXTENSIONS OF
-                            YOUR OWN BODY</p>
+            
+            <!-- Right Side -->
+            <div class="neuro-right">
+                <div class="neuro-stat">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Neural sync accuracy</div>
+                </div>
+                <div class="neuro-stat">
+                    <div class="stat-number">+140</div>
+                    <div class="stat-label">Years of combined bio-engineering experience</div>
+                </div>
+                <div class="neuro-stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Of our interfaces are seamless</div>
+                </div>
+                <div class="neuro-stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Real-time vital tracking</div>
+                </div>
+                
+                <div class="neuro-action-area">
+                    <div class="action-text">
+                        <h3>Ready?</h3>
+                        
+                        <div class="action-bottom-text">
+                            <p>Let us talk about your upgrade and<br>how our experts can support it.</p>
+                            <h2>Let's hit the link.</h2>
+                        </div>
+                    </div>
+                    <div class="action-button">
+                        <a href="#">
+                            <span>Plan your integration</span>
+                            <span>&rarr;</span>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <!-- Slide 1 Content -->
-            <div class="neuro-slide">
-                <div class="neuro-content">
-                    <h2>CORTICAL LINK 2.0</h2>
-                    <p class="subtitle">ADVANCED NEURAL MAPPING / CEREBRAL BYPASS / THOUGHT-TO-TEXT / SENSORY OVERRIDE
-                    </p>
-                    <div class="desc-wrapper">
-                        <span class="plus-icon">+</span>
-                        <p class="desc">DESCRIPTION: A NEXT-GENERATION INTERFACE DESIGNED FOR DIRECT BRAIN-TO-MACHINE
-                            COMMUNICATION. THE CORTICAL LINK ESTABLISHES A HIGH-BANDWIDTH CONNECTION, ENABLING
-                            INSTANTANEOUS DATA TRANSFER AND COMPLETE CONTROL OVER ADVANCED CYBERNETIC PROSTHETICS WITH
-                            ZERO LATENCY.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Controls -->
-        <div class="neuro-controls">
-            <button class="neuro-btn neuro-prev">&lt;</button>
-            <button class="neuro-btn neuro-next">&gt;</button>
         </div>
     </section>
 

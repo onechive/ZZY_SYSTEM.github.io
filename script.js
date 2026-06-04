@@ -151,34 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
         animateParticles();
     }
 
-    // 5. Neuro Section Slider
-    const neuroSection = document.querySelector('.neuro');
-    if (neuroSection) {
-        const bgTrack = document.getElementById('neuroBgTrack');
-        const contentTrack = document.getElementById('neuroContentTrack');
-        const prevBtn = neuroSection.querySelector('.neuro-prev');
-        const nextBtn = neuroSection.querySelector('.neuro-next');
-        const totalSlides = 2; // Assuming 2 slides for now based on markup
-        let currentSlide = 0;
-
-        function updateSlider() {
-            if (bgTrack) bgTrack.style.transform = `translateX(-${currentSlide * 50}%)`;
-            if (contentTrack) contentTrack.style.transform = `translateX(-${currentSlide * 50}%)`;
-        }
-
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateSlider();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateSlider();
-            });
-        }
-    }
-
     // 6. Team Page Spotlight Effect
     const teamCybernetic = document.querySelector('.team-cybernetic');
     const teamCyberneticText = document.querySelector('.team-cybernetic-text-spotlight');
@@ -327,5 +299,257 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const staggerTargets = document.querySelectorAll('.stagger-reveal');
     staggerTargets.forEach(el => new StaggerReveal(el));
+
+    // 9. Hero Scroll Assembly & Text 3D Interaction
+    const heroSection = document.getElementById('hero');
+    const heroSystemText = document.getElementById('hero-system-text');
+    const stickyContainer = document.querySelector('.hero-sticky-container');
+    
+    const heroLayers = [
+        document.querySelector('.layer-1'),
+        document.querySelector('.layer-2'),
+        document.querySelector('.layer-3')
+    ];
+
+    if (heroSection && heroSystemText && stickyContainer) {
+        
+        // Scroll Assembly Interaction
+        window.addEventListener('scroll', () => {
+            const rect = heroSection.getBoundingClientRect();
+            
+            // Calculate progress (0 to 1) as we scroll down the 400vh section
+            const scrollRange = heroSection.offsetHeight - window.innerHeight;
+            let progress = -rect.top / scrollRange;
+            
+            if (progress < 0) progress = 0;
+            if (progress > 1) progress = 1;
+            
+            // 3 Layers to reveal:
+            // Layer 1: 0.00 to 0.33
+            // Layer 2: 0.33 to 0.66
+            // Layer 3: 0.66 to 1.00
+            
+            heroLayers.forEach((layer, index) => {
+                if (!layer) return;
+                
+                const start = index * 0.333;
+                const end = (index + 1) * 0.333;
+                
+                let layerProgress = (progress - start) / (end - start);
+                if (layerProgress < 0) layerProgress = 0;
+                if (layerProgress > 1) layerProgress = 1;
+                
+                // Fade in
+                layer.style.opacity = layerProgress;
+                
+                // Slide up and scale down to normal size
+                const translateY = 150 * (1 - layerProgress);
+                const scale = 1 + 0.05 * (1 - layerProgress);
+                
+                layer.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            });
+        });
+
+        // 3D Text Mouse Interaction (attached to sticky container so it works correctly while scrolling)
+        stickyContainer.addEventListener('mousemove', (e) => {
+            const rect = stickyContainer.getBoundingClientRect();
+            
+            // Calculate mouse position relative to the center of the sticky container
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            // Calculate rotation based on mouse position
+            const rotateX = -(y / rect.height) * 15; // Max 7.5 deg
+            const rotateY = (x / rect.width) * 15;   // Max 7.5 deg
+
+            heroSystemText.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        stickyContainer.addEventListener('mouseleave', () => {
+            heroSystemText.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        });
+    }
+
+    // 10. Equipment Full Screen Slider
+    const eqTrack = document.getElementById('eqTrack');
+    const eqThumbs = document.querySelectorAll('.eq-thumb');
+    const eqSlides = document.querySelectorAll('.eq-slide');
+    
+    if (eqTrack && eqThumbs.length > 0) {
+        // Clone the first slide to the end for seamless looping
+        const firstClone = eqSlides[0].cloneNode(true);
+        eqTrack.appendChild(firstClone);
+        
+        const totalOriginalSlides = eqSlides.length;
+        let currentOffset = 0;
+        let isEqPaused = false;
+        let rafId;
+        const scrollSpeed = 1.5; // continuous pan speed
+        
+        // Remove transitions from track initially for smooth JS scrolling
+        eqTrack.style.transition = 'none';
+
+        function smoothScrollLoop() {
+            if (!isEqPaused) {
+                // Ensure no transition during continuous pan
+                eqTrack.style.transition = 'none';
+                
+                currentOffset += scrollSpeed;
+                
+                const slideWidth = window.innerWidth;
+                const maxOffset = totalOriginalSlides * slideWidth;
+                
+                if (currentOffset >= maxOffset) {
+                    // Seamless loop back to the start
+                    currentOffset = 0;
+                }
+                
+                eqTrack.style.transform = `translateX(-${currentOffset}px)`;
+                
+                // Update active thumb based on nearest slide index
+                const nearestIndex = Math.round(currentOffset / slideWidth) % totalOriginalSlides;
+                eqThumbs.forEach(t => t.classList.remove('active'));
+                if (eqThumbs[nearestIndex]) eqThumbs[nearestIndex].classList.add('active');
+            }
+            rafId = requestAnimationFrame(smoothScrollLoop);
+        }
+        
+        function stopEqSmoothScroll(targetIndex) {
+            isEqPaused = true;
+            
+            const slideWidth = window.innerWidth;
+            currentOffset = targetIndex * slideWidth;
+            
+            // Re-enable CSS transition for smooth snapping
+            eqTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            eqTrack.style.transform = `translateX(-${currentOffset}px)`;
+            
+            // Update thumbs and show description
+            eqThumbs.forEach(t => t.classList.remove('active'));
+            eqThumbs[targetIndex].classList.add('active');
+            
+            document.querySelectorAll('.eq-slide').forEach(s => s.classList.remove('active-desc'));
+            eqSlides[targetIndex].classList.add('active-desc');
+        }
+        
+        function resumeEqSmoothScroll() {
+            isEqPaused = false;
+            document.querySelectorAll('.eq-slide').forEach(s => s.classList.remove('active-desc'));
+        }
+        
+        eqThumbs.forEach((thumb, idx) => {
+            thumb.addEventListener('click', () => {
+                if (isEqPaused && thumb.classList.contains('active')) {
+                    // Clicked the active thumb while paused -> resume
+                    resumeEqSmoothScroll();
+                } else {
+                    // Clicked any thumb while playing or clicked a different thumb -> stop and snap
+                    stopEqSmoothScroll(idx);
+                }
+            });
+        });
+        
+        window.addEventListener('resize', () => {
+            if (isEqPaused) {
+                const slideWidth = window.innerWidth;
+                const activeThumb = document.querySelector('.eq-thumb.active');
+                if (activeThumb) {
+                    const idx = parseInt(activeThumb.getAttribute('data-index'));
+                    currentOffset = idx * slideWidth;
+                    eqTrack.style.transition = 'none';
+                    eqTrack.style.transform = `translateX(-${currentOffset}px)`;
+                }
+            }
+        });
+        
+        // Start smooth loop
+        rafId = requestAnimationFrame(smoothScrollLoop);
+    }
+
+    // 11. Product Page Sec-01 Scroll Interaction (Smooth Sticky Lerp)
+    const prodSec01 = document.querySelector('.sec-01');
+    const prodSec01Sticky = document.getElementById('sec01-sticky');
+    
+    if (prodSec01 && prodSec01Sticky) {
+        let targetProgress = 0;
+        let currentProgress = 0;
+        let isAnimating = false;
+
+        window.addEventListener('scroll', () => {
+            const rect = prodSec01.getBoundingClientRect();
+            // scrollRange is how far we can scroll down while sec-01 is sticky
+            const scrollRange = prodSec01.offsetHeight - window.innerHeight;
+            let progress = -rect.top / scrollRange;
+            
+            targetProgress = Math.max(0, Math.min(1, progress));
+            
+            if (!isAnimating) {
+                isAnimating = true;
+                requestAnimationFrame(smoothScrollAnim);
+            }
+        });
+
+        function smoothScrollAnim() {
+            // Lerp for smooth easing ("스르륵 수웅")
+            currentProgress += (targetProgress - currentProgress) * 0.08;
+            
+            // Elements
+            const titles = prodSec01Sticky.querySelector('.sec-01-titles');
+            const bgTexts = prodSec01Sticky.querySelectorAll('.sec-01-bg-text');
+            const lens = prodSec01Sticky.querySelector('.sec-01-lens');
+            
+            // 1. Titles fade out (completely invisible by ~66% progress)
+            const titlesOpacity = 1 - (currentProgress * 1.5);
+            if (titles) {
+                titles.style.opacity = Math.max(0, titlesOpacity);
+                // Also pull titles slightly upwards as they fade
+                titles.style.transform = `translateY(-${currentProgress * 150}px) translateX(-50%)`;
+                titles.style.left = '50%';
+            }
+
+            // 2. Background texts and Lens move downwards and scale up
+            const translateY = currentProgress * 400; // Moves down 400px
+            const scaleValue = 1 + (currentProgress * 1.0); // Grows slightly
+            // Fade out completely by 100% of the scroll
+            const mainOpacity = 1 - (currentProgress * 1.0); 
+
+            bgTexts.forEach(txt => {
+                txt.style.transform = `translateX(-50%) translateY(${translateY}px) scale(${scaleValue})`;
+                txt.style.opacity = Math.max(0, mainOpacity);
+            });
+
+            if (lens) {
+                lens.style.transform = `rotate(-23.68deg) translateY(${translateY}px) scale(${scaleValue})`;
+                lens.style.opacity = Math.max(0, mainOpacity);
+            }
+
+            // 3. Highlighter effect trigger
+            const highlights = prodSec01Sticky.querySelectorAll('.magic-underline, .magic-highlight-solid');
+            if (currentProgress < 0.05) {
+                highlights.forEach(h => h.classList.add('active'));
+            } else {
+                highlights.forEach(h => h.classList.remove('active'));
+            }
+
+            // Continue animating if we haven't reached target
+            if (Math.abs(targetProgress - currentProgress) > 0.001) {
+                requestAnimationFrame(smoothScrollAnim);
+            } else {
+                isAnimating = false;
+            }
+        }
+        
+        // Initial setup
+        const initialRect = prodSec01.getBoundingClientRect();
+        if(initialRect.top <= 0) {
+            targetProgress = Math.max(0, Math.min(1, -initialRect.top / (prodSec01.offsetHeight - window.innerHeight)));
+            currentProgress = targetProgress;
+            smoothScrollAnim();
+        } else {
+            // Force highlighter on initial load if at top
+            const highlights = prodSec01Sticky.querySelectorAll('.magic-underline, .magic-highlight-solid');
+            highlights.forEach(h => h.classList.add('active'));
+        }
+    }
 
 });
