@@ -1469,3 +1469,14 @@ footer {
     transform: scaleY(1) !important;
     transform-origin: top;
 }
+
+/* Hide default controls and overlays for robotic-arms-video */
+#robotic-arms-video::-webkit-media-controls,
+#robotic-arms-video::-webkit-media-controls-start-playback-button,
+#robotic-arms-video::-webkit-media-controls-enclosure,
+#robotic-arms-video::-webkit-media-controls-panel,
+#robotic-arms-video::-webkit-media-controls-play-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+    opacity: 0 !important;
+}

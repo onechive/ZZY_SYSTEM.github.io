@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // 0. Autoplay helper for robotic arms video
+    const roboticArmsVideo = document.getElementById('robotic-arms-video');
+    if (roboticArmsVideo) {
+        roboticArmsVideo.muted = true;
+        roboticArmsVideo.loop = true;
+        roboticArmsVideo.setAttribute('playsinline', '');
+        roboticArmsVideo.setAttribute('autoplay', '');
+        
+        const attemptPlay = () => {
+            const playPromise = roboticArmsVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Try playing on user interaction if blocked by browser policy
+                    document.body.addEventListener('touchstart', attemptPlay, { once: true });
+                    document.body.addEventListener('click', attemptPlay, { once: true });
+                    document.body.addEventListener('scroll', attemptPlay, { once: true });
+                });
+            }
+        };
+        attemptPlay();
+    }
+
     // 1. Hamburger Menu Toggle
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const fullscreenOverlay = document.getElementById('fullscreen-overlay');
