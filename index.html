@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://fonts.cdnfonts.com/css/dune-rise" rel="stylesheet">
     <link rel="stylesheet" href="intro.css">
 </head>
+
 <body>
     <!-- Background WebGL Canvas for Ripple Distortion -->
     <canvas id="ripple-canvas"></canvas>
@@ -14,7 +16,7 @@
     <div class="overlay">
         <!-- Glassmorphism Card -->
         <div class="popup-card" id="popup-card">
-            
+
             <!-- Default Verification UI -->
             <div id="verify-ui" class="verify-ui">
                 <h2 class="dune-font">Please verify that you are not a robot</h2>
@@ -28,7 +30,7 @@
                     <text>
                         <!-- 'LOADING • ' repeated to fill the circle -->
                         <textPath href="#circlePath" startOffset="0%" textLength="220">
-                            LOADING • LOADING • LOADING • 
+                            LOADING • LOADING • LOADING •
                         </textPath>
                     </text>
                 </svg>
@@ -38,10 +40,11 @@
             <div id="success-ui" class="success-ui hidden">
                 <h2 class="dune-font">Confirmed</h2>
             </div>
-            
+
         </div>
     </div>
 
     <script src="intro.js"></script>
 </body>
+
 </html>

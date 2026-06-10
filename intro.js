@@ -3,9 +3,20 @@
    The script manages the state of the verification popup and drives the WebGL ripple effect.
    The Ripple effect uses a lightweight custom WebGL shader. On mouse/touch move, ripples are spawned and passed to the fragment shader. 
    The shader uses a sine wave function based on distance and age to displace UV coordinates of a generated grid pattern.
+   It also draws a dreamy spotlight gradient at the lerped mouse coordinates, cycling colors smoothly between #3B1A4C, #1A234C, and #142F45.
+   
+   UX Optimization: Once verified, sessionStorage preserves the verified state so navigations back to Home (index.html) bypass verification.
 */
 
+// Check verification status immediately to prevent layout flashes
+if (sessionStorage.getItem('verified') === 'true') {
+    window.location.replace('main.html');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // If already verified, do not run any initialization
+    if (sessionStorage.getItem('verified') === 'true') return;
+
     // --- UI Logic ---
     const verifyBtn = document.getElementById('verify-btn');
     const verifyUi = document.getElementById('verify-ui');
@@ -21,10 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             loadingUi.classList.add('hidden');
             successUi.classList.remove('hidden');
+            
+            // Save verified state in session storage
+            sessionStorage.setItem('verified', 'true');
 
             // Redirect to main page after 1 second success message
             setTimeout(() => {
-                window.location.href = 'main.html';
+                window.location.replace('main.html');
             }, 1000);
         }, 3000);
     });
@@ -61,6 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
         precision highp float;
         varying vec2 vUv;
         uniform vec2 uResolution;
+        uniform float uTime;
+        uniform vec2 uMouse;
+        uniform float uMouseActive;
         
         uniform vec3 uRipples[32]; // x, y, age
         uniform int uRippleCount;
@@ -69,9 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         uniform float uFreq;
         uniform float uAmp;
         uniform float uLife;
-
-        uniform vec2 uMouse;
-        uniform float uTime;
 
         void main() {
             vec2 uv = vUv;
@@ -111,30 +125,45 @@ document.addEventListener('DOMContentLoaded', () => {
             float line = smoothstep(0.0, 0.05, grid.x) * smoothstep(0.95, 1.0, grid.x) + 
                          smoothstep(0.0, 0.05, grid.y) * smoothstep(0.95, 1.0, grid.y);
             
-            // Vignette for aesthetic
-            float vignette = 1.0 - length(vUv - 0.5) * 1.2;
+            // --- Dreamy background colors (spotlight) ---
+            // Colors:
+            // C1: #3B1A4C -> vec3(0.231, 0.102, 0.298)
+            // C2: #1A234C -> vec3(0.102, 0.137, 0.298)
+            // C3: #142F45 -> vec3(0.078, 0.184, 0.271)
             
-            // Dreamy Glow based on mouse position
-            vec3 color1 = vec3(0.231, 0.102, 0.298); // #3B1A4C
-            vec3 color2 = vec3(0.102, 0.137, 0.298); // #1A234C
-            vec3 color3 = vec3(0.078, 0.184, 0.271); // #142F45
+            vec3 c1 = vec3(0.231, 0.102, 0.298);
+            vec3 c2 = vec3(0.102, 0.137, 0.298);
+            vec3 c3 = vec3(0.078, 0.184, 0.271);
             
-            float t1 = sin(uTime * 0.5) * 0.5 + 0.5;
-            float t2 = cos(uTime * 0.7) * 0.5 + 0.5;
-            vec3 glowColor = mix(mix(color1, color2, t1), color3, t2);
-
-            vec2 mouseDir = (uv - uMouse) * aspect;
+            // Slowly cycle spotlight base color
+            float t = uTime * 0.8;
+            vec3 spotColor = mix(c1, c2, sin(t) * 0.5 + 0.5);
+            spotColor = mix(spotColor, c3, cos(t * 0.6) * 0.5 + 0.5);
+            
+            // Calculate distance to lerped mouse position
+            vec2 mouseDir = (distortedUv - uMouse) * aspect;
             float mouseDist = length(mouseDir);
             
-            // Soft circular glow
-            float glow = smoothstep(0.8, 0.0, mouseDist);
-            glow *= 1.8; // Brightness
+            // Dreamy spotlight: soft circular gradient
+            float spotGlow = smoothstep(0.65, 0.0, mouseDist) * uMouseActive;
+            vec3 spotlight = spotColor * spotGlow * 1.8;
             
-            vec3 bgColor = vec3(0.03, 0.04, 0.05); // Monochrome dark
-            vec3 lineColor = vec3(0.1, 0.15, 0.2);
-            vec3 baseColor = mix(bgColor, lineColor, line) * vignette;
+            // Slow floating background ambient light so it's not totally black when mouse is inactive
+            vec2 amb1 = vec2(0.25 + sin(uTime * 0.15) * 0.08, 0.35 + cos(uTime * 0.2) * 0.08);
+            vec2 amb2 = vec2(0.75 + cos(uTime * 0.12) * 0.08, 0.65 + sin(uTime * 0.25) * 0.08);
             
-            vec3 color = baseColor + glowColor * glow;
+            float glow1 = smoothstep(0.6, 0.0, length((distortedUv - amb1) * aspect));
+            float glow2 = smoothstep(0.6, 0.0, length((distortedUv - amb2) * aspect));
+            
+            vec3 ambient = c2 * glow1 * 0.4 + c3 * glow2 * 0.4;
+            
+            vec3 bgColor = vec3(0.01, 0.01, 0.015) + ambient + spotlight;
+            vec3 lineColor = vec3(0.08, 0.12, 0.16) + ambient * 0.3 + spotlight * 0.2;
+            
+            // Vignette for aesthetic depth
+            float vignette = 1.0 - length(vUv - 0.5) * 1.25;
+            
+            vec3 color = mix(bgColor, lineColor, line) * vignette;
             
             gl_FragColor = vec4(color, 1.0);
         }
@@ -179,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uRippleCountLocation = gl.getUniformLocation(program, "uRippleCount");
     const uTimeLocation = gl.getUniformLocation(program, "uTime");
     const uMouseLocation = gl.getUniformLocation(program, "uMouse");
+    const uMouseActiveLocation = gl.getUniformLocation(program, "uMouseActive");
     
     gl.uniform1f(gl.getUniformLocation(program, "uSpeed"), params.speed);
     gl.uniform1f(gl.getUniformLocation(program, "uFreq"), params.freq);
@@ -187,6 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let ripples = [];
     let lastMouse = { x: 0, y: 0 };
+    let targetMouse = { x: 0.5, y: 0.5 };
+    let currentMouse = { x: 0.5, y: 0.5 };
+    let mouseActive = 0.0;
+    let mouseActiveTarget = 0.0;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -197,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resize);
     resize();
 
-    // Spawn ripples on interaction
+    // Spawn ripples and update mouse coords on interaction
     function handlePointer(e) {
         let clientX = e.clientX;
         let clientY = e.clientY;
@@ -208,6 +242,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const x = clientX / window.innerWidth;
         const y = 1.0 - (clientY / window.innerHeight);
+
+        targetMouse.x = x;
+        targetMouse.y = y;
+        mouseActiveTarget = 1.0;
 
         const dx = clientX - lastMouse.x;
         const dy = clientY - lastMouse.y;
@@ -223,14 +261,24 @@ document.addEventListener('DOMContentLoaded', () => {
             lastMouse.y = clientY;
         }
     }
+
     document.addEventListener('mousemove', handlePointer);
     document.addEventListener('touchmove', handlePointer, {passive: true});
 
+    document.addEventListener('mouseleave', () => {
+        mouseActiveTarget = 0.0;
+    });
+    document.addEventListener('mouseenter', () => {
+        mouseActiveTarget = 1.0;
+    });
+
+    const startTime = performance.now();
     let lastTime = performance.now();
 
     function render(time) {
         const dt = (time - lastTime) / 1000.0;
         lastTime = time;
+        const elapsed = (time - startTime) / 1000.0;
 
         // Respect prefers-reduced-motion
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -240,7 +288,16 @@ document.addEventListener('DOMContentLoaded', () => {
             ripples.forEach(r => r.age += dt);
             ripples = ripples.filter(r => r.age < params.life);
 
+            // Lerp mouse
+            currentMouse.x += (targetMouse.x - currentMouse.x) * 0.08;
+            currentMouse.y += (targetMouse.y - currentMouse.y) * 0.08;
+            mouseActive += (mouseActiveTarget - mouseActive) * 0.05;
+
             // Pass to shader
+            gl.uniform1f(uTimeLocation, elapsed);
+            gl.uniform2f(uMouseLocation, currentMouse.x, currentMouse.y);
+            gl.uniform1f(uMouseActiveLocation, mouseActive);
+
             if (ripples.length > 0) {
                 const rippleData = new Float32Array(32 * 3);
                 for (let i = 0; i < ripples.length; i++) {
@@ -254,14 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             gl.drawArrays(gl.TRIANGLES, 0, 6);
         }
-        
-        // Pass time and mouse position to shader
-        gl.uniform1f(uTimeLocation, time / 1000.0);
-        
-        // Use normalized mouse coords. If lastMouse is 0, default to center.
-        let mx = lastMouse.x === 0 ? 0.5 : lastMouse.x / window.innerWidth;
-        let my = lastMouse.y === 0 ? 0.5 : 1.0 - (lastMouse.y / window.innerHeight);
-        gl.uniform2f(uMouseLocation, mx, my);
         
         requestAnimationFrame(render);
     }
