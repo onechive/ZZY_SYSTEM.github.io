@@ -251,9 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Section 5.5 Lens Case Interactive Scroll Logic
     const secLensCase = document.querySelector('.sec-lens-case');
-    const lensContainer = document.querySelector('.lens-case-container');
+    const lensSticky = document.getElementById('lens-sticky');
+    const lensVideoWrapper = document.getElementById('lens-video-wrapper');
     const textLeft = document.getElementById('lens-text-left');
     const textRight = document.getElementById('lens-text-right');
+    const video1 = document.getElementById('lens-video-1');
+    const video2 = document.getElementById('lens-video-2');
 
     const lensData = [
         {
@@ -266,68 +269,414 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    let lensStep = 0;
-    let isLensScrolling = false;
-
-    if (secLensCase && lensContainer && textLeft && textRight) {
+    if (secLensCase && lensSticky && textLeft && textRight) {
+        let currentLensPhase = 0;
         
-        const updateLensStep = (step) => {
-            // Fade out text
-            textLeft.style.opacity = '0';
-            textRight.style.opacity = '0';
-            
-            setTimeout(() => {
-                textLeft.innerHTML = lensData[step].left;
-                textRight.innerHTML = lensData[step].right;
-                
-                // Fade in text
-                textLeft.style.opacity = '1';
-                textRight.style.opacity = '1';
-            }, 600); // Wait for text fade out (CSS is 0.6s)
-
-            // Toggle video state via CSS class
-            if (step === 1) {
-                lensContainer.classList.add('step-1');
-            } else {
-                lensContainer.classList.remove('step-1');
-            }
-        };
-
-        secLensCase.addEventListener('wheel', (e) => {
-            if (isLensScrolling) {
-                e.preventDefault();
-                return;
-            }
-
+        // Setup initial state
+        textLeft.innerHTML = lensData[0].left;
+        textRight.innerHTML = lensData[0].right;
+        textRight.style.opacity = 1; // override any css hiding
+        
+        window.addEventListener('scroll', () => {
             const rect = secLensCase.getBoundingClientRect();
-            const viewHeight = window.innerHeight;
-            // Activate scroll hijack when mostly centered
-            const threshold = viewHeight * 0.25;
-            const isActive = rect.top <= threshold && rect.bottom >= (viewHeight - threshold);
+            const totalScroll = secLensCase.offsetHeight - window.innerHeight;
+            let progress = 0;
+            
+            if (rect.top <= 0) {
+                progress = -rect.top / totalScroll;
+            }
+            progress = Math.max(0, Math.min(1, progress));
 
-            if (e.deltaY > 0) {
-                // Scroll down
-                if (lensStep < 1) {
-                    if (isActive) {
-                        e.preventDefault();
-                        isLensScrolling = true;
-                        lensStep++;
-                        updateLensStep(lensStep);
-                        setTimeout(() => { isLensScrolling = false; }, 1000);
+            // Scale logic: 1 -> 4.5 -> 1
+            let scale = 1;
+            if (progress <= 0.3) {
+                scale = 1 + (progress / 0.3) * 3.5;
+            } else if (progress <= 0.6) {
+                scale = 4.5;
+            } else if (progress <= 0.9) {
+                scale = 4.5 - ((progress - 0.6) / 0.3) * 3.5;
+            } else {
+                scale = 1;
+            }
+            lensVideoWrapper.style.transform = `scale(${scale})`;
+
+            // Color logic: Background to white, Text to black while expanded
+            if (progress > 0.15 && progress < 0.75) {
+                lensSticky.style.backgroundColor = '#fff';
+                textLeft.style.color = '#000';
+                textRight.style.color = '#000';
+            } else {
+                lensSticky.style.backgroundColor = '#000';
+                textLeft.style.color = '#fff';
+                textRight.style.color = '#fff';
+            }
+
+            // Crossfade Video and Text logic
+            if (progress < 0.35) {
+                video1.style.opacity = 1;
+                video2.style.opacity = 0;
+                
+                if (currentLensPhase !== 0) {
+                    textLeft.style.opacity = 0;
+                    textRight.style.opacity = 0;
+                    setTimeout(() => {
+                        textLeft.innerHTML = lensData[0].left;
+                        textRight.innerHTML = lensData[0].right;
+                        textLeft.style.opacity = 1;
+                        textRight.style.opacity = 1;
+                    }, 150);
+                    currentLensPhase = 0;
+                } else if (textLeft.style.opacity === '0') {
+                    // Fail safe if timeout missed
+                    textLeft.style.opacity = 1;
+                    textRight.style.opacity = 1;
+                }
+            } else if (progress >= 0.35 && progress <= 0.55) {
+                const fadeProgress = (progress - 0.35) / 0.2;
+                video1.style.opacity = 1 - fadeProgress;
+                video2.style.opacity = fadeProgress;
+            } else {
+                video1.style.opacity = 0;
+                video2.style.opacity = 1;
+                
+                if (currentLensPhase !== 1) {
+                    textLeft.style.opacity = 0;
+                    textRight.style.opacity = 0;
+                    setTimeout(() => {
+                        textLeft.innerHTML = lensData[1].left;
+                        textRight.innerHTML = lensData[1].right;
+                        textLeft.style.opacity = 1;
+                        textRight.style.opacity = 1;
+                    }, 150);
+                    currentLensPhase = 1;
+                } else if (textLeft.style.opacity === '0') {
+                    textLeft.style.opacity = 1;
+                    textRight.style.opacity = 1;
+                }
+            }
+        });
+        
+        // Force playback robustly for both videos
+        [video1, video2].forEach(vid => {
+            if (vid) {
+                vid.muted = true;
+                vid.setAttribute('playsinline', '');
+                vid.setAttribute('autoplay', '');
+                const attemptPlay = () => {
+                    const playPromise = vid.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {
+                            document.body.addEventListener('touchstart', attemptPlay, { once: true });
+                            document.body.addEventListener('click', attemptPlay, { once: true });
+                            document.body.addEventListener('scroll', attemptPlay, { once: true });
+                        });
+                    }
+                };
+                attemptPlay();
+            }
+        });
+    }
+
+    // Section 5.7 Hamburger Scrub Logic
+    const secHamburger = document.querySelector('.sec-hamburger');
+    const hamburgerVideo = document.getElementById('hamburger-video');
+    const hbTexts = [
+        document.getElementById('hb-text-1'),
+        document.getElementById('hb-text-2'),
+        document.getElementById('hb-text-3'),
+        document.getElementById('hb-text-4')
+    ];
+
+    if (secHamburger && hamburgerVideo) {
+        let scrollProgress = 0;
+        let currentVideoTime = 0;
+        let targetVideoTime = 0;
+        let scrubAnimationId = null;
+
+        // Make sure video is loaded to get duration
+        hamburgerVideo.load();
+
+        function smoothScrub() {
+            // Lerp current time towards target time for smooth "stop-motion" removal
+            currentVideoTime += (targetVideoTime - currentVideoTime) * 0.1;
+            
+            // Only update if the difference is noticeable to save performance
+            if (Math.abs(currentVideoTime - hamburgerVideo.currentTime) > 0.03) {
+                hamburgerVideo.currentTime = currentVideoTime;
+            }
+
+            // Continue loop if not reached target yet
+            if (Math.abs(targetVideoTime - currentVideoTime) > 0.005) {
+                scrubAnimationId = requestAnimationFrame(smoothScrub);
+            } else {
+                scrubAnimationId = null;
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            const rect = secHamburger.getBoundingClientRect();
+            const totalScroll = secHamburger.offsetHeight - window.innerHeight;
+            let progress = 0;
+            
+            if (rect.top <= 0 && totalScroll > 0) {
+                progress = -rect.top / totalScroll;
+            }
+            if (rect.top > 0) progress = 0;
+            if (-rect.top >= totalScroll) progress = 1;
+            
+            scrollProgress = progress;
+
+            // Handle Text Fading based on progress
+            const thresholds = [0.1, 0.35, 0.6, 0.85];
+            hbTexts.forEach((text, i) => {
+                if (text) {
+                    if (progress > thresholds[i]) {
+                        text.style.opacity = 1;
+                        text.style.transform = 'translateY(0)';
+                    } else {
+                        text.style.opacity = 0;
+                        text.style.transform = 'translateY(20px)';
                     }
                 }
-            } else if (e.deltaY < 0) {
-                // Scroll up
-                if (lensStep > 0) {
-                    if (isActive) {
-                        e.preventDefault();
-                        isLensScrolling = true;
-                        lensStep--;
-                        updateLensStep(lensStep);
-                        setTimeout(() => { isLensScrolling = false; }, 1000);
+            });
+
+            if (hamburgerVideo.duration) {
+                targetVideoTime = scrollProgress * hamburgerVideo.duration;
+                if (!scrubAnimationId) {
+                    scrubAnimationId = requestAnimationFrame(smoothScrub);
+                }
+            }
+        });
+    }
+
+    // Section 2 Scroll Reveal Text
+    const sec02 = document.querySelector('.sec-02');
+    const sec02Text = document.getElementById('sec02-text');
+    
+    if (sec02 && sec02Text) {
+        // Split text into words and wrap in spans
+        const words = sec02Text.innerText.split(' ');
+        sec02Text.innerHTML = '';
+        words.forEach(word => {
+            const span = document.createElement('span');
+            span.innerText = word + ' ';
+            sec02Text.appendChild(span);
+        });
+
+        const spans = sec02Text.querySelectorAll('span');
+
+        window.addEventListener('scroll', () => {
+            const rect = sec02.getBoundingClientRect();
+            
+            // The section is sticky. It starts sticking when rect.top <= 0.
+            // The total scrollable distance for the effect is sec02 height minus viewport height.
+            const totalScroll = sec02.offsetHeight - window.innerHeight;
+            
+            let progress = 0;
+            
+            if (rect.top <= 0) {
+                // How far we've scrolled while it's sticking
+                const scrolled = -rect.top;
+                // Add a small buffer so it finishes revealing slightly before unsticking
+                progress = scrolled / (totalScroll * 0.8);
+            }
+            
+            progress = Math.max(0, Math.min(1, progress));
+            
+            const activeCount = Math.floor(progress * spans.length);
+            
+            spans.forEach((span, index) => {
+                if (index < activeCount) {
+                    span.classList.add('active');
+                } else {
+                    span.classList.remove('active');
+                }
+            });
+        });
+        
+        // Trigger once on load
+        window.dispatchEvent(new Event('scroll'));
+    }
+
+    // Section 3 Hand Scale Effect
+    const sec03 = document.querySelector('.sec-03');
+    const sec03HandContainer = document.querySelector('.sec-03-hand-container');
+    const sec03Text = document.querySelector('.sec-03-text-content');
+    
+    if (sec03 && sec03HandContainer && sec03Text) {
+        window.addEventListener('scroll', () => {
+            const rect = sec03.getBoundingClientRect();
+            const totalScroll = sec03.offsetHeight - window.innerHeight;
+            
+            let progress = 0;
+            if (rect.top <= 0) {
+                progress = -rect.top / totalScroll;
+            }
+            progress = Math.max(0, Math.min(1, progress));
+            
+            // Scale hand from 1 to 20 to fill the screen
+            const scale = 1 + (progress * 19);
+            sec03HandContainer.style.transform = `scale(${scale})`;
+            
+            // Smoothly fade out the big text AND the subtitle text as the image scales
+            // "사진 화면이 커질 때 텍스트 투명도가 0%으로 해서 부드럽게 전환"
+            const textOpacity = Math.max(0, 1 - (progress * 2.5));
+            sec03Text.style.opacity = textOpacity;
+            const subtitle = sec03HandContainer.querySelector('.sec-03-subtitle-new');
+            if (subtitle) {
+                subtitle.style.opacity = textOpacity;
+            }
+            
+            // Fade out the hand image when it gets extremely large (progress > 0.6)
+            // to prevent seeing broken pixels at the very end of the transition
+            if (progress > 0.6) {
+                sec03HandContainer.style.opacity = Math.max(0, 1 - ((progress - 0.6) * 3.33));
+            } else {
+                sec03HandContainer.style.opacity = 1;
+            }
+        });
+        
+        // Force video playback robustly
+        const bgVideo = document.querySelector('.sec-03-bg-video');
+        if (bgVideo) {
+            bgVideo.muted = true;
+            bgVideo.setAttribute('muted', '');
+            bgVideo.setAttribute('playsinline', '');
+            bgVideo.setAttribute('autoplay', '');
+            
+            const attemptPlay = () => {
+                const playPromise = bgVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // Autoplay blocked, wait for interaction
+                        document.body.addEventListener('touchstart', attemptPlay, { once: true });
+                        document.body.addEventListener('click', attemptPlay, { once: true });
+                        document.body.addEventListener('scroll', attemptPlay, { once: true });
+                    });
+                }
+            };
+            attemptPlay();
+        }
+    }
+
+    /**
+     * Text Displacement Effect
+     * Letters flinch around the cursor with a Gaussian falloff.
+     */
+    class TextDisplacement {
+        constructor(element, options = {}) {
+            this.el = element;
+            this.strength = options.strength !== undefined ? options.strength : 60;
+            this.radius = options.radius !== undefined ? options.radius : 32;
+            
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            this.spans = [];
+            this.rects = [];
+            this.mouseX = 0;
+            this.mouseY = 0;
+            this.targetMouseX = 0;
+            this.targetMouseY = 0;
+            this.isHovering = false;
+            
+            this.init();
+        }
+        
+        init() {
+            const text = this.el.innerText;
+            this.el.innerHTML = '';
+            
+            const words = text.split(' ');
+            words.forEach((word, wordIndex) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.style.display = 'inline-block';
+                wordSpan.style.whiteSpace = 'nowrap';
+                
+                for (let i = 0; i < word.length; i++) {
+                    const charSpan = document.createElement('span');
+                    charSpan.innerText = word[i];
+                    charSpan.style.display = 'inline-block';
+                    charSpan.style.transition = 'transform 0.1s linear';
+                    charSpan.style.willChange = 'transform';
+                    wordSpan.appendChild(charSpan);
+                    this.spans.push(charSpan);
+                }
+                
+                this.el.appendChild(wordSpan);
+                if (wordIndex < words.length - 1) {
+                    this.el.appendChild(document.createTextNode(' '));
+                }
+            });
+
+            window.addEventListener('resize', () => this.calcRects());
+            // Need a small delay to ensure fonts/layout are loaded before calculating
+            setTimeout(() => this.calcRects(), 100);
+
+            document.addEventListener('mousemove', (e) => {
+                this.targetMouseX = e.clientX;
+                this.targetMouseY = e.clientY;
+                if (!this.isHovering) {
+                    this.isHovering = true;
+                    this.update();
+                }
+            });
+            
+            this.update = this.update.bind(this);
+        }
+        
+        calcRects() {
+            this.scrollY = window.scrollY;
+            this.rects = this.spans.map(span => {
+                const rect = span.getBoundingClientRect();
+                return {
+                    cx: rect.left + rect.width / 2,
+                    cy: rect.top + rect.height / 2 + this.scrollY
+                };
+            });
+        }
+        
+        update() {
+            this.mouseX += (this.targetMouseX - this.mouseX) * 0.2;
+            this.mouseY += (this.targetMouseY - this.mouseY) * 0.2;
+
+            let anyMoved = false;
+            const currentScrollY = window.scrollY;
+
+            // Only run if we actually have rects
+            if (this.rects.length > 0) {
+                for (let i = 0; i < this.spans.length; i++) {
+                    const rect = this.rects[i];
+                    const dx = rect.cx - this.mouseX;
+                    const dy = (rect.cy - currentScrollY) - this.mouseY;
+                    const distSq = dx * dx + dy * dy;
+                    
+                    const rSq = (this.radius * 10) * (this.radius * 10); 
+                    const force = Math.exp(-distSq / (2 * rSq));
+                    
+                    if (force > 0.01) {
+                        anyMoved = true;
+                        const dist = Math.sqrt(distSq) || 1;
+                        const pushX = (dx / dist) * force * this.strength;
+                        const pushY = (dy / dist) * force * this.strength;
+                        
+                        this.spans[i].style.transform = `translate(${pushX}px, ${pushY}px)`;
+                    } else {
+                        this.spans[i].style.transform = `translate(0px, 0px)`;
                     }
                 }
             }
-        }, { passive: false });
+
+            if (anyMoved || Math.abs(this.targetMouseX - this.mouseX) > 0.1) {
+                requestAnimationFrame(this.update);
+            } else {
+                this.isHovering = false;
+            }
+        }
     }
+
+    // Initialize Text Displacement for Sec-04 Text
+    const sec04HeaderH2 = document.querySelector('.sec-04-header h2');
+    const sec04HeaderP = document.querySelector('.sec-04-header p');
+    if (sec04HeaderH2) new TextDisplacement(sec04HeaderH2, { strength: 60, radius: 32 });
+    if (sec04HeaderP) new TextDisplacement(sec04HeaderP, { strength: 40, radius: 25 });
 });

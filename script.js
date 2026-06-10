@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Hamburger Menu Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const fullscreenOverlay = document.getElementById('fullscreen-overlay');
     
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+    if (hamburgerBtn && fullscreenOverlay) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            fullscreenOverlay.classList.toggle('active');
         });
     }
 
@@ -29,37 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const revealElements = document.querySelectorAll('.reveal-up');
     revealElements.forEach(el => observer.observe(el));
 
-    // 2.5 Header Scroll Reveal with Stagger
-    const headerNavItems = document.querySelectorAll('.nav-menu ul li');
-    if (headerNavItems.length > 0) {
-        headerNavItems.forEach(item => item.classList.add('nav-reveal'));
-        
-        const headerObserver = new IntersectionObserver((entries) => {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const stagger = 120; // default stagger ms
-                    headerNavItems.forEach((item, index) => {
-                        if (prefersReducedMotion) {
-                            item.classList.add('visible');
-                        } else {
-                            setTimeout(() => {
-                                item.classList.add('visible');
-                            }, index * stagger);
-                        }
-                    });
-                } else {
-                    // Optional: remove visible class when off-screen to allow re-reveal
-                    headerNavItems.forEach(item => item.classList.remove('visible'));
-                }
-            });
-        }, { threshold: 0.1 });
 
-        const headerNavContainer = document.querySelector('.nav-menu ul');
-        if(headerNavContainer) {
-            headerObserver.observe(headerNavContainer);
-        }
-    }
 
     // 3. Spotlight Effect on Section 2 (Company Text)
     const companySection = document.querySelector('.company');
@@ -550,6 +520,60 @@ document.addEventListener("DOMContentLoaded", () => {
             const highlights = prodSec01Sticky.querySelectorAll('.magic-underline, .magic-highlight-solid');
             highlights.forEach(h => h.classList.add('active'));
         }
+    }
+
+
+    // 12. Page Transition (Blinds Effect)
+    const sliceCount = 10;
+    const transitionDuration = 600; // ms (must match CSS)
+    const staggerDelay = 50; // ms
+
+    // Get the existing overlay elements
+    let transitionOverlay = document.getElementById('page-transition-overlay');
+    
+    if (transitionOverlay) {
+        const slices = transitionOverlay.querySelectorAll('.pt-slice');
+
+        // On Page Load: Un-blind (reveal the page)
+        requestAnimationFrame(() => {
+            slices.forEach((slice, idx) => {
+                // We want the slices to shrink downwards
+                slice.style.transformOrigin = 'bottom';
+                setTimeout(() => {
+                    slice.style.transform = 'scaleY(0)';
+                }, idx * staggerDelay);
+            });
+            
+            // Optional: pointer-events none is handled by CSS, but we can clean it up
+            setTimeout(() => {
+                transitionOverlay.style.pointerEvents = 'none';
+            }, (sliceCount * staggerDelay) + transitionDuration);
+        });
+
+        // Handle Link Clicks: Blind (cover the page) then navigate
+        const overlayLinks = document.querySelectorAll('.overlay-link');
+        overlayLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetUrl = this.getAttribute('href');
+
+                // Set transform origin to top so they slide down to cover
+                transitionOverlay.style.pointerEvents = 'auto'; // Block clicks during transition
+                slices.forEach((slice, idx) => {
+                    slice.style.transformOrigin = 'top';
+                    setTimeout(() => {
+                        slice.style.transform = 'scaleY(1)';
+                    }, idx * staggerDelay);
+                });
+
+                // Calculate total time: last slice's delay + CSS transition duration + slight buffer
+                const totalAnimationTime = (sliceCount * staggerDelay) + transitionDuration + 100;
+                
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, totalAnimationTime);
+            });
+        });
     }
 
 });

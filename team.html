@@ -16,18 +16,50 @@
 </head>
 
 <body class="team-page">
+    <!-- Page Transition Overlay (Hardcoded to prevent flash) -->
+    <div class="page-transition-overlay" id="page-transition-overlay">
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+    </div>
     <canvas id="mouse-canvas"></canvas>
-    <!-- Header & Navigation -->
+    <!-- Header & Navigation (Hamburger) -->
     <header class="main-header">
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="team.html">TEAM</a></li>
-                <li><a href="product.html">PRODUCT</a></li>
-                <li><a href="CONTACT.html">CONTACT</a></li>
-            </ul>
-        </nav>
+        <button class="hamburger-btn" id="hamburger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- Fullscreen Overlay Menu -->
+    <div class="fullscreen-overlay" id="fullscreen-overlay">
+        <nav class="overlay-nav">
+            <a href="index.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                HOME
+            </a>
+            <a href="team.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                TEAM
+            </a>
+            <a href="product.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                PRODUCT
+            </a>
+            <a href="CONTACT.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                CONTACT
+            </a>
+        </nav>
+    </div>
 
     <!-- Section 1: Hero -->
     <section class="team-hero reveal-up" id="hero">

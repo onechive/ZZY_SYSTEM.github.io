@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap');
+
 /* product.css */
 .product-page {
     background-color: #000;
@@ -11,7 +13,7 @@
 
 .product-main {
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 /* Shared section class */
@@ -179,125 +181,245 @@
 
 /* SECTION 2 */
 .sec-02 {
-    min-height: 800px;
-    justify-content: center;
-    padding: 100px 100px;
-}
-
-.sec-02-content {
-    display: flex;
-    justify-content: space-between;
+    height: 300vh;
+    /* Make section tall enough to allow scrolling while text changes */
     width: 100%;
-    max-width: 1600px;
     position: relative;
+    padding: 0;
+    margin: 0;
+    background: #000;
 }
 
-.sec-02-text {
-    width: 50%;
-    padding-top: 100px;
+.sec-02-sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('img/product02_eye.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-.sec-02-text h2 {
+.sec-02-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    /* Slightly darken to make text visible */
+    z-index: 1;
+}
+
+.sec-02-content-centered {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sec-02-content-centered h2 {
     font-family: 'Helvetica Neue', sans-serif;
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 1.2;
-    margin-bottom: 200px;
+    font-weight: 700;
+    font-size: 130px;
+    /* Greatly increased size */
+    line-height: 1.1;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    animation: floating 4s ease-in-out infinite;
 }
 
-.sec-02-text p {
+.sec-02-content-centered p {
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 1.5;
-    max-width: 560px;
+    font-size: 40px;
+    /* Increased size */
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 1400px;
+    /* Widened to match large text */
+    color: rgba(255, 255, 255, 0.2);
+    animation: floating 4s ease-in-out infinite 0.5s;
 }
 
-.sec-02-image {
-    width: 703px;
-    height: 420px;
-    position: absolute;
-    right: -100px;
-    top: 100px;
+.sec-02-content-centered p span {
+    color: rgba(255, 255, 255, 0.3);
+    transition: color 0.1s ease;
 }
 
-.sec-02-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: bottom;
+.sec-02-content-centered p span.active {
+    color: #ffffff;
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 /* SECTION 3 */
 .sec-03 {
-    min-height: 900px;
+    height: 300vh;
+    /* scrollable space for the scale effect */
+    position: relative;
+    width: 100%;
+    margin-top: 0;
+}
+
+.sec-03-sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    margin-top: 150px;
-    /* spacing to prevent overlap */
 }
 
-.sec-03-circle {
-    width: 900px;
-    height: 905px;
+.sec-03-bg-video {
     position: absolute;
-}
-
-.sec-03-circle img {
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0.7;
+    pointer-events: none;
+    /* Prevents clicking which might show play button */
 }
 
-.sec-03-title {
-    position: relative;
+.sec-03-bg-video::-webkit-media-controls {
+    display: none !important;
+}
+
+.sec-03-bg-video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+.sec-03-bg-video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+.sec-03-bg-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+}
+
+.sec-03-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 2;
+    pointer-events: none;
+}
+
+.sec-03-text-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
     text-align: center;
-    margin-top: -50px;
+    pointer-events: none;
 }
 
-.sec-03-title .subtitle {
-    font-family: 'Dune Rise', sans-serif;
-    font-size: 16px;
-    color: #8b8b8b;
-    margin-bottom: 5px;
+.sec-03-title-new {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    font-size: 130px;
+    /* Increased font size */
+    line-height: 1.1;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 2px;
 }
 
-.sec-03-title h2 {
-    font-family: 'Dune Rise', sans-serif;
-    font-size: 64px;
+.sec-03-hand-container {
+    position: absolute;
+    bottom: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: center 80%;
+    /* scale from near bottom */
+    will-change: transform, opacity;
+}
+
+#sec-03-hand {
+    width: 500px;
+    max-width: 80vw;
+    height: auto;
+}
+
+.sec-03-subtitle-new {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
 }
 
 /* SECTION 4 */
 .sec-04 {
-    padding: 100px 0;
+    padding: 150px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .sec-04-header {
     width: 100%;
-    padding-left: 116px;
-    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 100px;
+    padding: 0 50px;
 }
 
 .sec-04-header h2 {
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: bold;
-    font-size: 36px;
-    color: #555;
-    max-width: 600px;
-    line-height: 1.2;
-    margin-bottom: 30px;
-}
-
-.sec-04-header h2 span {
+    font-size: 70px;
     color: #fff;
+    /* Make it entirely white for impact */
+    max-width: 1400px;
+    line-height: 1.1;
+    margin-bottom: 40px;
 }
 
 .sec-04-header p {
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: 500;
-    font-size: 20px;
-    color: #666;
-    max-width: 564px;
-    line-height: 1.2;
+    font-size: 30px;
+    color: #888;
+    max-width: 1000px;
+    line-height: 1.4;
 }
 
 .sec-04-image-container {
@@ -420,7 +542,76 @@
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: 300;
     font-size: 24px;
-    margin-bottom: 150px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+/* SECTION 4 FEATURE BLOCKS */
+.feature-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 150px;
+}
+
+.feature-block:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.feature-img-wrapper {
+    flex: 1;
+    max-width: 45%;
+}
+
+.feature-img-wrapper img {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.feature-text-large {
+    flex: 1;
+}
+
+/* VARIABLE FONT EFFECT */
+.variable-font-effect {
+    display: block;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 80px;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 30px;
+    font-variation-settings: "wght" 400, "wdth" 100, "slnt" 0;
+    /* Duration is controlled via CSS variable, defaults to 3.6s */
+    animation: variableFontAnim var(--duration, 3.6s) infinite alternate ease-in-out;
+}
+
+.feature-text-large p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 30px;
+    color: #aaa;
+    line-height: 1.4;
+    max-width: 600px;
+}
+
+@keyframes variableFontAnim {
+    0% {
+        font-variation-settings: "wght" 500, "wdth" 85, "slnt" 0;
+    }
+
+    100% {
+        font-variation-settings: "wght" 600, "wdth" 90, "slnt" -2;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .variable-font-effect {
+        animation: none;
+    }
 }
 
 /* Remove duplicated .sec-05-content rule */
@@ -482,73 +673,86 @@
 /* SECTION 5.5: Lens Case */
 .sec-lens-case {
     width: 100%;
-    min-height: 100vh;
-    padding: 120px 0;
+    height: 400vh; /* Scroll space for roller coaster effect */
+    position: relative;
+}
+
+.lens-case-sticky-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000;
-    box-sizing: border-box;
+    background-color: #000;
+    overflow: hidden;
+    transition: background-color 0.5s ease;
 }
 
-.lens-case-container {
+.lens-case-content {
     width: 95%;
     max-width: 1600px;
     display: grid;
     grid-template-columns: 380px 1fr 380px;
     gap: 60px;
-    align-items: stretch;
+    align-items: center;
     position: relative;
+    z-index: 2;
 }
 
 .text-top-left {
     grid-column: 1;
-    align-self: start;
+    align-self: center;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 32px;
     font-weight: bold;
     line-height: 1.3;
     color: #fff;
-    padding-top: 40px;
-    transition: opacity 0.6s ease;
+    transition: color 0.5s ease, opacity 0.5s ease;
+    z-index: 3;
 }
 
 .text-bottom-right {
     grid-column: 3;
-    align-self: end;
+    align-self: center;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 32px;
     font-weight: bold;
     line-height: 1.3;
     color: #fff;
     text-align: right;
-    padding-bottom: 40px;
-    transition: opacity 0.6s ease;
+    opacity: 0;
+    transition: color 0.5s ease, opacity 0.5s ease;
+    z-index: 3;
 }
 
 .lens-video-wrapper {
     grid-column: 2;
     width: 100%;
-    max-height: 360px;
-    /* 이 값을 조절하여 영상의 잘리는 높이(아랫부분)를 조절할 수 있습니다 (예: 400px, 450px 등) */
-    overflow: hidden;
     position: relative;
     display: flex;
-    align-items: flex-start;
-    /* 영상을 위쪽 기준으로 정렬하여 아랫부분이 잘리도록 설정 */
+    align-items: center;
     justify-content: center;
+    transform-origin: center center;
+    will-change: transform;
+    z-index: 1;
 }
 
 .lens-video-wrapper video {
     width: 100%;
     height: auto;
     display: block;
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    border-radius: 20px;
+    transition: opacity 0.5s ease;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    /* Clip the bottom 15% to hide the veo logo */
+    clip-path: inset(0 0 15% 0);
 }
 
 #lens-video-1 {
     position: relative;
-    z-index: 1;
+    opacity: 1;
 }
 
 #lens-video-2 {
@@ -556,19 +760,86 @@
     top: 0;
     left: 0;
     opacity: 0;
-    transform: translateY(50px);
+}
+
+/* SECTION 5.7: Hamburger Scrub */
+.sec-hamburger {
+    width: 100%;
+    height: 400vh; /* scrollable space */
+    position: relative;
+    background: #000;
+}
+
+.hamburger-sticky-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+}
+
+.hamburger-video-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.hamburger-video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: scale(1.1);
+}
+
+.hamburger-text-grid {
+    position: absolute;
+    width: 90%;
+    max-width: 1400px;
+    height: 70%;
     z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    pointer-events: none;
 }
 
-.lens-case-container.step-1 #lens-video-1 {
+.hb-text {
+    font-family: 'Helvetica Neue', sans-serif;
+    color: #fff;
     opacity: 0;
-    transform: translateY(-50px);
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.lens-case-container.step-1 #lens-video-2 {
-    opacity: 1;
-    transform: translateY(0);
+.hb-text h4 {
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 10px;
+    display: inline-block;
+    color: #fff;
 }
+
+.hb-text p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #aaa;
+    max-width: 350px;
+}
+
+.hb-top-left { grid-column: 1; grid-row: 1; align-self: start; justify-self: start; }
+.hb-top-right { grid-column: 2; grid-row: 1; align-self: start; justify-self: end; }
+.hb-bottom-left { grid-column: 1; grid-row: 2; align-self: end; justify-self: start; }
+.hb-bottom-right { grid-column: 2; grid-row: 2; align-self: end; justify-self: end; }
 
 @media (max-width: 1024px) {
     .lens-case-container {

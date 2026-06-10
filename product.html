@@ -17,21 +17,51 @@
 </head>
 
 <body class="product-page">
+    <!-- Page Transition Overlay (Hardcoded to prevent flash) -->
+    <div class="page-transition-overlay" id="page-transition-overlay">
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
+    </div>
     <canvas id="mouse-canvas"></canvas>
 
-    <!-- Header & Navigation -->
+    <!-- Header & Navigation (Hamburger) -->
     <header class="main-header">
-        <div class="header-container">
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="team.html">TEAM</a></li>
-                    <li><a href="product.html">PRODUCT</a></li>
-                    <li><a href="CONTACT.html">CONTACT</a></li>
-                </ul>
-            </nav>
-        </div>
+        <button class="hamburger-btn" id="hamburger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- Fullscreen Overlay Menu -->
+    <div class="fullscreen-overlay" id="fullscreen-overlay">
+        <nav class="overlay-nav">
+            <a href="index.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                HOME
+            </a>
+            <a href="team.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                TEAM
+            </a>
+            <a href="product.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                PRODUCT
+            </a>
+            <a href="CONTACT.html" class="overlay-link">
+                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span class="br-br"></span>
+                CONTACT
+            </a>
+        </nav>
+    </div>
 
     <main class="product-main">
         <!-- Section 1 -->
@@ -52,27 +82,29 @@
 
         <!-- Section 2 -->
         <section class="prod-sec sec-02 reveal-up">
-            <div class="sec-02-content">
-                <div class="sec-02-text">
+            <div class="sec-02-sticky-container">
+                <div class="sec-02-bg-overlay"></div>
+                <div class="sec-02-content-centered">
                     <h2>THE Human Eye Was<br>Never Built for Everything</h2>
-                    <p>It misses subtle movements, fails in darkness, loses detail under pressure, and cannot read the
-                        invisible signals surrounding the body. In a world filled with data, danger, and microscopic
-                        change, the natural eye is no longer enough.</p>
-                </div>
-                <div class="sec-02-image">
-                    <img src="img/product02_eye.png" alt="Human Eye">
+                    <p id="sec02-text">It misses subtle movements, fails in darkness, loses detail under pressure, and cannot read the invisible signals surrounding the body. In a world filled with data, danger, and microscopic change, the natural eye is no longer enough.</p>
                 </div>
             </div>
         </section>
 
         <!-- Section 3 -->
-        <section class="prod-sec sec-03 reveal-up">
-            <div class="sec-03-circle">
-                <img src="img/product/circle.svg" alt="Nervision Circle">
-            </div>
-            <div class="sec-03-title">
-                <p class="subtitle">See BEYOND THE HUMAN EYE</p>
-                <h2>NERVISION 1</h2>
+        <section class="prod-sec sec-03">
+            <div class="sec-03-sticky-container">
+                <video class="sec-03-bg-video" src="img/product02_wall.mp4" autoplay loop muted playsinline></video>
+                <div class="sec-03-overlay"></div>
+                
+                <div class="sec-03-text-content">
+                    <h2 class="sec-03-title-new">SEE<br>BEYOND<br>THE<br>HUMAN EYE</h2>
+                </div>
+                
+                <div class="sec-03-hand-container">
+                    <img src="img/product03_Robotichand.png" alt="Robotic Hand" id="sec-03-hand">
+                    <p class="sec-03-subtitle-new">NERVISION 1</p>
+                </div>
             </div>
         </section>
 
@@ -86,41 +118,53 @@
             </div>
 
             <div class="sec-04-image-container">
-                <img src="img/product03_Robotichand.png" alt="Robotic Hand" class="main-hand">
+                <div class="feature-block">
+                    <div class="feature-img-wrapper">
+                        <img src="img/product05_photo1.png" alt="Low-Light Amplification">
+                    </div>
+                    <div class="feature-text-large">
+                        <strong class="variable-font-effect">Low-Light Amplification</strong>
+                        <p>Enhances vision in dark or unstable environments without external devices.</p>
+                    </div>
+                </div>
 
-                <div class="feature-point pt-1">
-                    <img src="img/product03_01.png" class="num-img img-01" alt="01">
-                    <div class="feature-text">
-                        <strong>Low-Light Amplification</strong><br><br>Enhances vision in dark or unstable <br>
-                        environments without external devices.
+                <div class="feature-block">
+                    <div class="feature-img-wrapper">
+                        <img src="img/product05_photo2.png" alt="Depth Recalibration">
+                    </div>
+                    <div class="feature-text-large">
+                        <strong class="variable-font-effect" style="--duration: 4.2s;">Depth Recalibration</strong>
+                        <p>Reconstructs spatial depth to support more accurate distance perception.</p>
                     </div>
                 </div>
-                <div class="feature-point pt-2">
-                    <img src="img/product03_02.png" class="num-img img-02" alt="02">
-                    <div class="feature-text">
-                        <strong>Depth Recalibration</strong><br><br>Reconstructs spatial depth to support <br> more
-                        accurate distance perception.
+
+                <div class="feature-block">
+                    <div class="feature-img-wrapper">
+                        <img src="img/product05_photo3.png" alt="Micro-Motion Detection">
+                    </div>
+                    <div class="feature-text-large">
+                        <strong class="variable-font-effect" style="--duration: 3.1s;">Micro-Motion Detection</strong>
+                        <p>Detects subtle movement patterns invisible to the natural eye.</p>
                     </div>
                 </div>
-                <div class="feature-point pt-3">
-                    <img src="img/product03_03.png" class="num-img img-03" alt="03">
-                    <div class="feature-text">
-                        <strong>Micro-Motion Detection</strong><br><br>Detects subtle movement patterns <br> invisible
-                        to the natural eye.
+
+                <div class="feature-block">
+                    <div class="feature-img-wrapper">
+                        <img src="img/product05_photo4.png" alt="Thermal Readout">
+                    </div>
+                    <div class="feature-text-large">
+                        <strong class="variable-font-effect" style="--duration: 5.0s;">Thermal Readout</strong>
+                        <p>Overlays heat signatures onto physical environments in real-time.</p>
                     </div>
                 </div>
-                <div class="feature-point pt-4">
-                    <img src="img/product03_04.png" class="num-img img-04" alt="04">
-                    <div class="feature-text">
-                        <strong>Signal Overlay Interface</strong><br><br>Displays processed visual data as a minimal
-                        <br> layer over the user’s field of view.
+
+                <div class="feature-block">
+                    <div class="feature-img-wrapper">
+                        <img src="img/product05_photo5.png" alt="Biometric Tracking">
                     </div>
-                </div>
-                <div class="feature-point pt-5">
-                    <img src="img/product03_05.png" class="num-img img-05" alt="05">
-                    <div class="feature-text">
-                        <strong>Adaptive Eye Sync</strong><br><br>Learns the user’s visual rhythm and adapts <br> to
-                        individual perception patterns.
+                    <div class="feature-text-large">
+                        <strong class="variable-font-effect" style="--duration: 2.8s;">Biometric Tracking</strong>
+                        <p>Monitors vital signs of surrounding subjects through visual pulse analysis.</p>
                     </div>
                 </div>
             </div>
@@ -157,22 +201,51 @@
         </section>
 
         <!-- Section 5.5: Lens Case Video -->
-        <section class="prod-sec sec-lens-case reveal-up">
-            <div class="lens-case-container">
-                <div class="text-top-left" id="lens-text-left">
-                    Its compact size<br>
-                    makes it convenient<br>
-                    to wear anywhere,<br>
-                    anytime
+        <section class="prod-sec sec-lens-case">
+            <div class="lens-case-sticky-container" id="lens-sticky">
+                <div class="lens-case-content">
+                    <div class="text-top-left" id="lens-text-left">
+                        Its compact size<br>
+                        makes it convenient<br>
+                        to wear anywhere,<br>
+                        anytime
+                    </div>
+                    <div class="lens-video-wrapper" id="lens-video-wrapper">
+                        <video id="lens-video-1" src="img/product04_lens1.mp4" autoplay loop muted playsinline></video>
+                        <video id="lens-video-2" src="img/product04_lens1_hand.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="text-bottom-right" id="lens-text-right">
+                        A special tool that can<br>
+                        be used indefinitely as<br>
+                        long as it isn't broken
+                    </div>
                 </div>
-                <div class="lens-video-wrapper">
-                    <video id="lens-video-1" src="img/product04_lens1.mp4" autoplay loop muted playsinline></video>
-                    <video id="lens-video-2" src="img/product04_lens1_hand.mp4" autoplay loop muted playsinline></video>
+            </div>
+        </section>
+
+        <!-- Section 5.7: Hamburger Video Scrubbing -->
+        <section class="prod-sec sec-hamburger">
+            <div class="hamburger-sticky-container" id="hamburger-sticky">
+                <div class="hamburger-video-wrapper">
+                    <video id="hamburger-video" src="img/product04_Hamburger.mp4" muted playsinline preload="auto"></video>
                 </div>
-                <div class="text-bottom-right" id="lens-text-right">
-                    A special tool that can<br>
-                    be used indefinitely as<br>
-                    long as it isn't broken
+                <div class="hamburger-text-grid">
+                    <div class="hb-text hb-top-left" id="hb-text-1">
+                        <h4>Heat</h4>
+                        <p>High-temperature heat opens up the widest range of applications, from Chemicals to Steelmaking and District heating</p>
+                    </div>
+                    <div class="hb-text hb-top-right" id="hb-text-2">
+                        <h4>Heat & Power</h4>
+                        <p>Can produce heat and electricity for Oil & Gas facilities, Mining operations & other industrial facilities</p>
+                    </div>
+                    <div class="hb-text hb-bottom-left" id="hb-text-3">
+                        <h4>Hydrogen</h4>
+                        <p>Highly efficient hydrogen production for Chemicals (ammonia, polymers, e-fuels), Oil & Gas facilities, and Sustainable Aviation Fuel</p>
+                    </div>
+                    <div class="hb-text hb-bottom-right" id="hb-text-4">
+                        <h4>Electricity</h4>
+                        <p>Designed to produce 24/7 clean power for Data Centers, Microgrids, and Residential and Commercial users</p>
+                    </div>
                 </div>
             </div>
         </section>
