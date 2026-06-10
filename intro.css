@@ -1,0 +1,132 @@
+/* intro.css */
+/* Core idea: 
+   The background is a WebGL canvas rendering the Ripple distortion effect.
+   The popup card utilizes CSS glassmorphism (backdrop-filter: blur, rgba background).
+   The loading text leverages an SVG <textPath> animated via CSS rotation to create a continuous circular stamp effect.
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #05080a; /* Fallback dark color */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#ripple-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Let pointer events pass to canvas for ripples */
+}
+
+.popup-card {
+    pointer-events: auto; /* Re-enable pointer events for the card */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 70px 90px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    min-width: 520px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.verify-ui, .loading-ui, .success-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.dune-font {
+    font-family: 'Dune Rise', sans-serif;
+    letter-spacing: 2px;
+}
+
+.verify-ui h2 {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 50px;
+    letter-spacing: 1px;
+}
+
+.verify-btn {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 30px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.verify-btn:hover {
+    transform: scale(1.05);
+    background: #e6e6e6;
+}
+
+.verify-btn:active {
+    transform: scale(0.95);
+}
+
+/* Circular Text Loading Effect */
+.circular-text {
+    width: 100px;
+    height: 100px;
+    fill: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    animation: rotateText var(--duration, 12s) linear infinite;
+}
+
+@keyframes rotateText {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.success-ui h2 {
+    font-size: 22px;
+    font-weight: 400;
+    color: #4ade80; /* Subtle green to indicate success */
+    letter-spacing: 1px;
+}
