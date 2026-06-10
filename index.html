@@ -1,249 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZZY SYSTEM</title>
-    <meta name="description" content="Cybernetic Healthcare Company - ZZY SYSTEM">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Verification</title>
     <link href="https://fonts.cdnfonts.com/css/dune-rise" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@300;400&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="intro.css">
 </head>
-
 <body>
-    <!-- Page Transition Overlay (Hardcoded to prevent flash) -->
-    <div class="page-transition-overlay" id="page-transition-overlay">
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-        <div class="pt-slice" style="transform: scaleY(1); transform-origin: bottom;"></div>
-    </div>
-    <canvas id="mouse-canvas"></canvas>
-    <!-- Header & Navigation (Hamburger) -->
-    <header class="main-header">
-        <button class="hamburger-btn" id="hamburger-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </header>
+    <!-- Background WebGL Canvas for Ripple Distortion -->
+    <canvas id="ripple-canvas"></canvas>
 
-    <!-- Fullscreen Overlay Menu -->
-    <div class="fullscreen-overlay" id="fullscreen-overlay">
-        <nav class="overlay-nav">
-            <a href="index.html" class="overlay-link">
-                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span
-                    class="br-br"></span>
-                HOME
-            </a>
-            <a href="team.html" class="overlay-link">
-                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span
-                    class="br-br"></span>
-                TEAM
-            </a>
-            <a href="product.html" class="overlay-link">
-                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span
-                    class="br-br"></span>
-                PRODUCT
-            </a>
-            <a href="CONTACT.html" class="overlay-link">
-                <span class="br-tl"></span><span class="br-tr"></span><span class="br-bl"></span><span
-                    class="br-br"></span>
-                CONTACT
-            </a>
-        </nav>
+    <div class="overlay">
+        <!-- Glassmorphism Card -->
+        <div class="popup-card" id="popup-card">
+            
+            <!-- Default Verification UI -->
+            <div id="verify-ui" class="verify-ui">
+                <h2 class="dune-font">Please verify that you are not a robot</h2>
+                <button class="verify-btn" id="verify-btn">OK</button>
+            </div>
+
+            <!-- Loading UI (Circular Text) -->
+            <div id="loading-ui" class="loading-ui hidden">
+                <svg class="circular-text" viewBox="0 0 100 100">
+                    <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+                    <text>
+                        <!-- 'LOADING • ' repeated to fill the circle -->
+                        <textPath href="#circlePath" startOffset="0%" textLength="220">
+                            LOADING • LOADING • LOADING • 
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+
+            <!-- Success UI -->
+            <div id="success-ui" class="success-ui hidden">
+                <h2 class="dune-font">Confirmed</h2>
+            </div>
+            
+        </div>
     </div>
 
-    <!-- Section 1: Hero -->
-    <section class="hero" id="hero">
-        <div class="hero-sticky-container">
-            <div class="hero-bg-container">
-                <div class="hero-bg layer-0"></div>
-                <div class="hero-bg layer-1"></div>
-                <div class="hero-bg layer-2"></div>
-                <div class="hero-bg layer-3"></div>
-            </div>
-            <div class="hero-gradient"></div>
-            <div class="hero-title">
-                <h1 class="system-text" id="hero-system-text">
-                    <span class="z1">Z</span>
-                    <span class="z2">Z</span>
-                    <span class="y">Y</span>
-                    <span class="system">SYSTEM</span>
-                </h1>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 2: Cybernetic Company -->
-    <section class="company reveal-up">
-        <div class="company-bg"></div>
-        <div class="company-gradient"></div>
-        <div class="company-content">
-            <h2 class="company-text-spotlight"
-                data-text="WE ARE A CYBERNETIC HEALTHCARE COMPANY THAT REINTERPRETS, REPAIRS, AND REASSEMBLES THE HUMAN BODY WHEN IT BREAKS DOWN">
-                WE ARE A CYBERNETIC HEALTHCARE COMPANY THAT REINTERPRETS, REPAIRS, AND REASSEMBLES THE HUMAN BODY WHEN
-                IT BREAKS DOWN
-            </h2>
-            <div class="plus-icon">+</div>
-        </div>
-    </section>
-
-    <!-- Section 3: Error Diagnosis -->
-    <section class="diagnosis reveal-up">
-        <div class="diagnosis-top">
-            <p>ERROR DIAGNOSIS &amp; STRUCTURAL REASSEMBLY</p>
-        </div>
-        <div class="diagnosis-image">
-            <img src="img/3.png" alt="Artificial Heart" class="pulse-anim">
-        </div>
-        <div class="diagnosis-bottom">
-            <h2>WE DO NOT HIDE BODILY PAIN AND DEFECTS, BUT VIEW THEM AS ANALYZABLE ERRORS.</h2>
-        </div>
-    </section>
-
-    <!-- Section 4: Equipment -->
-    <section class="equipment reveal-up">
-        <h3>ZZY EQUIPMENT FOR TECHNOLOGY DEVELOPMENT</h3>
-        <div class="equipment-slider-container">
-            <div class="equipment-slide-track" id="eqTrack">
-                <div class="eq-slide" style="background-image: url('img/4-1.jpg');">
-                    <div class="eq-desc">
-                        <h4>Spine Implant V1</h4>
-                        <p>Neural link stabilization unit</p>
-                    </div>
-                </div>
-                <div class="eq-slide" style="background-image: url('img/4-2.jpg');">
-                    <div class="eq-desc">
-                        <h4>Arm Implant X</h4>
-                        <p>High-torque mechanical limbs</p>
-                    </div>
-                </div>
-                <div class="eq-slide" style="background-image: url('img/4-3.jpg');">
-                    <div class="eq-desc">
-                        <h4>Bio-Incubator</h4>
-                        <p>Accelerated tissue growth</p>
-                    </div>
-                </div>
-                <div class="eq-slide" style="background-image: url('img/4-4.jpg');">
-                    <div class="eq-desc">
-                        <h4>Spine Interface</h4>
-                        <p>Direct nervous system sync</p>
-                    </div>
-                </div>
-                <div class="eq-slide" style="background-image: url('img/4-5.jpg');">
-                    <div class="eq-desc">
-                        <h4>Neural Optimizer</h4>
-                        <p>Advanced synaptic acceleration</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="equipment-thumbnails">
-                <div class="eq-thumb" data-index="0"><img src="img/4-1.jpg" alt="Thumb 1"></div>
-                <div class="eq-thumb" data-index="1"><img src="img/4-2.jpg" alt="Thumb 2"></div>
-                <div class="eq-thumb" data-index="2"><img src="img/4-3.jpg" alt="Thumb 3"></div>
-                <div class="eq-thumb" data-index="3"><img src="img/4-4.jpg" alt="Thumb 4"></div>
-                <div class="eq-thumb" data-index="4"><img src="img/4-5.jpg" alt="Thumb 5"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 5: Neuro-Synapse -->
-    <section class="neuro reveal-up">
-        <div class="neuro-grid-container">
-            <!-- Left Side -->
-            <div class="neuro-left">
-                <div class="neuro-left-top">
-                    <p>ZZY System®<br>Cybernetic<br>Enhancement</p>
-                </div>
-                <div class="neuro-left-mid">
-                    <p>We build our neural links, we<br>run full-sync, and our<br>implants are always on.</p>
-                </div>
-                <div class="neuro-left-bottom">
-                    <img src="img/5.png" alt="Neuro Implants">
-                </div>
-            </div>
-
-            <!-- Right Side -->
-            <div class="neuro-right">
-                <div class="neuro-stat">
-                    <div class="stat-number">99.9%</div>
-                    <div class="stat-label">Neural sync accuracy</div>
-                </div>
-                <div class="neuro-stat">
-                    <div class="stat-number">+140</div>
-                    <div class="stat-label">Years of combined bio-engineering experience</div>
-                </div>
-                <div class="neuro-stat">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Of our interfaces are seamless</div>
-                </div>
-                <div class="neuro-stat">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Real-time vital tracking</div>
-                </div>
-
-                <div class="neuro-action-area">
-                    <div class="action-text">
-                        <h3>Ready?</h3>
-
-                        <div class="action-bottom-text">
-                            <p>Let us talk about your upgrade and<br>how our experts can support it.</p>
-                            <h2>Let's hit the link.</h2>
-                        </div>
-                    </div>
-                    <div class="action-button">
-                        <a href="CONTACT.html">
-                            <span>Plan your integration</span>
-                            <span>&rarr;</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 6: Learn More -->
-    <section class="learn-more reveal-up">
-        <div class="learn-more-bg"></div>
-        <div class="robotic-arms">
-            <video src="img/6.mp4" autoplay loop muted playsinline alt="Robotic Hands"></video>
-        </div>
-        <div class="button-wrapper">
-            <a href="team.html" class="btn">Learn more about us</a>
-        </div>
-    </section>
-
-    <!-- Section 7: Footer -->
-    <footer class="reveal-up">
-        <div class="footer-logo">
-            <img src="img/logo.png" alt="ZZY Logo" class="footer-logo-img">
-            <div class="zzy-mark">
-                <span class="fz1">Z</span>
-                <span class="fz2">Z</span>
-                <span class="fy">Y</span>
-            </div>
-            <div class="footer-system">SYSTEM</div>
-        </div>
-        <div class="footer-copy">
-            <p>&copy; 2026 ZZY CYBERNETICS</p>
-            <p>ALL RIGHTS RETAINED BY THE SYSTEM</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+    <script src="intro.js"></script>
 </body>
-
 </html>

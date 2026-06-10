@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Redirect to main page after 1 second success message
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'main.html';
             }, 1000);
         }, 3000);
     });
