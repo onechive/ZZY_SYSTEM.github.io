@@ -276,6 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const stickyContainer = document.querySelector('.hero-sticky-container');
     
     const heroLayers = [
+        document.querySelector('.layer-0'),
         document.querySelector('.layer-1'),
         document.querySelector('.layer-2'),
         document.querySelector('.layer-3')
@@ -294,16 +295,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (progress < 0) progress = 0;
             if (progress > 1) progress = 1;
             
-            // 3 Layers to reveal:
-            // Layer 1: 0.00 to 0.33
-            // Layer 2: 0.33 to 0.66
-            // Layer 3: 0.66 to 1.00
+            // 4 Layers to reveal:
+            // Layer 0: 0.00 to 0.25
+            // Layer 1: 0.25 to 0.50
+            // Layer 2: 0.50 to 0.75
+            // Layer 3: 0.75 to 1.00
             
             heroLayers.forEach((layer, index) => {
                 if (!layer) return;
                 
-                const start = index * 0.333;
-                const end = (index + 1) * 0.333;
+                const start = index * 0.25;
+                const end = (index + 1) * 0.25;
                 
                 let layerProgress = (progress - start) / (end - start);
                 if (layerProgress < 0) layerProgress = 0;
@@ -354,19 +356,18 @@ document.addEventListener("DOMContentLoaded", () => {
         let currentOffset = 0;
         let isEqPaused = false;
         let rafId;
-        const scrollSpeed = 1.5; // continuous pan speed
+        const scrollSpeed = 2.8; // continuous pan speed (increased from 1.5)
         
+        let slideWidth = window.innerWidth;
+        let currentThumbIndex = -1;
+
         // Remove transitions from track initially for smooth JS scrolling
         eqTrack.style.transition = 'none';
 
         function smoothScrollLoop() {
             if (!isEqPaused) {
-                // Ensure no transition during continuous pan
-                eqTrack.style.transition = 'none';
-                
                 currentOffset += scrollSpeed;
                 
-                const slideWidth = window.innerWidth;
                 const maxOffset = totalOriginalSlides * slideWidth;
                 
                 if (currentOffset >= maxOffset) {
@@ -376,10 +377,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 eqTrack.style.transform = `translateX(-${currentOffset}px)`;
                 
-                // Update active thumb based on nearest slide index
+                // Update active thumb based on nearest slide index (only if it changed)
                 const nearestIndex = Math.round(currentOffset / slideWidth) % totalOriginalSlides;
-                eqThumbs.forEach(t => t.classList.remove('active'));
-                if (eqThumbs[nearestIndex]) eqThumbs[nearestIndex].classList.add('active');
+                if (nearestIndex !== currentThumbIndex) {
+                    if (currentThumbIndex >= 0 && eqThumbs[currentThumbIndex]) {
+                        eqThumbs[currentThumbIndex].classList.remove('active');
+                    }
+                    if (eqThumbs[nearestIndex]) {
+                        eqThumbs[nearestIndex].classList.add('active');
+                    }
+                    currentThumbIndex = nearestIndex;
+                }
             }
             rafId = requestAnimationFrame(smoothScrollLoop);
         }
@@ -387,16 +395,20 @@ document.addEventListener("DOMContentLoaded", () => {
         function stopEqSmoothScroll(targetIndex) {
             isEqPaused = true;
             
-            const slideWidth = window.innerWidth;
             currentOffset = targetIndex * slideWidth;
             
-            // Re-enable CSS transition for smooth snapping
-            eqTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            // Re-enable CSS transition for smooth snapping (sped up from 0.8s to 0.5s)
+            eqTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
             eqTrack.style.transform = `translateX(-${currentOffset}px)`;
             
             // Update thumbs and show description
-            eqThumbs.forEach(t => t.classList.remove('active'));
-            eqThumbs[targetIndex].classList.add('active');
+            if (currentThumbIndex >= 0 && eqThumbs[currentThumbIndex]) {
+                eqThumbs[currentThumbIndex].classList.remove('active');
+            }
+            if (eqThumbs[targetIndex]) {
+                eqThumbs[targetIndex].classList.add('active');
+            }
+            currentThumbIndex = targetIndex;
             
             document.querySelectorAll('.eq-slide').forEach(s => s.classList.remove('active-desc'));
             eqSlides[targetIndex].classList.add('active-desc');
@@ -404,6 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         function resumeEqSmoothScroll() {
             isEqPaused = false;
+            eqTrack.style.transition = 'none';
             document.querySelectorAll('.eq-slide').forEach(s => s.classList.remove('active-desc'));
         }
         
@@ -420,12 +433,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         window.addEventListener('resize', () => {
+            slideWidth = window.innerWidth;
             if (isEqPaused) {
-                const slideWidth = window.innerWidth;
-                const activeThumb = document.querySelector('.eq-thumb.active');
-                if (activeThumb) {
-                    const idx = parseInt(activeThumb.getAttribute('data-index'));
-                    currentOffset = idx * slideWidth;
+                if (currentThumbIndex >= 0) {
+                    currentOffset = currentThumbIndex * slideWidth;
                     eqTrack.style.transition = 'none';
                     eqTrack.style.transform = `translateX(-${currentOffset}px)`;
                 }

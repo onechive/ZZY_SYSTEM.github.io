@@ -425,8 +425,11 @@
 .sec-04-image-container {
     position: relative;
     width: 100%;
-    max-width: 1920px;
-    min-height: 1000px;
+    max-width: 1600px;
+    margin: 0 auto 150px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .main-hand {
@@ -547,55 +550,95 @@
     color: #ccc;
 }
 
-/* SECTION 4 FEATURE BLOCKS */
-.feature-block {
+/* SECTION 4 ACCORDION LIST */
+.sec-04-accordion-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 80px;
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto 150px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 60px 0;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
-.feature-block:nth-child(even) {
-    flex-direction: row-reverse;
-}
-
-.feature-img-wrapper {
-    flex: 1;
-    max-width: 45%;
-}
-
-.feature-img-wrapper img {
-    width: 100%;
-    border-radius: 20px;
-    object-fit: cover;
-}
-
-.feature-text-large {
-    flex: 1;
-}
-
-/* VARIABLE FONT EFFECT */
-.variable-font-effect {
-    display: block;
-    font-family: 'Roboto Flex', sans-serif;
-    font-size: 80px;
-    line-height: 1.1;
-    color: #fff;
-    margin-bottom: 30px;
-    font-variation-settings: "wght" 400, "wdth" 100, "slnt" 0;
-    /* Duration is controlled via CSS variable, defaults to 3.6s */
-    animation: variableFontAnim var(--duration, 3.6s) infinite alternate ease-in-out;
-}
-
-.feature-text-large p {
+.accordion-num {
     font-family: 'Helvetica Neue', sans-serif;
-    font-size: 30px;
+    font-size: 24px;
+    color: #555;
+    width: 80px;
+    flex-shrink: 0;
+    transition: color 0.4s ease;
+    align-self: flex-start; /* Keep number at the top if container height grows */
+    padding-top: 20px;
+}
+
+.accordion-reveal {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, margin-right 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
+.accordion-reveal img {
+    width: 400px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    max-width: none;
+}
+
+.accordion-desc {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 16px;
     color: #aaa;
-    line-height: 1.4;
-    max-width: 600px;
+    line-height: 1.5;
+    margin-top: 20px;
+    width: 400px;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.2s;
+}
+
+.accordion-title {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.accordion-title strong.variable-font-effect {
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 60px;
+    line-height: 1.1;
+    color: #444; /* Gray initially */
+    margin-bottom: 0;
+    transition: color 0.4s ease;
+    font-variation-settings: "wght" 400, "wdth" 100, "slnt" 0;
+    display: block;
+}
+
+/* Hover States */
+.sec-04-accordion-item:hover .accordion-num {
+    color: #fff;
+}
+
+.sec-04-accordion-item:hover .accordion-reveal {
+    width: 400px; /* same as image width */
+    opacity: 1;
+    margin-right: 40px; /* Space between image and text */
+}
+
+.sec-04-accordion-item:hover .accordion-desc {
+    opacity: 1;
+}
+
+.sec-04-accordion-item:hover .accordion-title strong.variable-font-effect {
+    color: #fff;
+    animation: variableFontAnim var(--duration, 3.6s) infinite alternate ease-in-out;
 }
 
 @keyframes variableFontAnim {
@@ -609,7 +652,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .variable-font-effect {
+    .sec-04-accordion-item:hover .accordion-title strong.variable-font-effect {
         animation: none;
     }
 }
@@ -743,7 +786,6 @@
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 20px;
     transition: opacity 0.5s ease;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     /* Clip the bottom 15% to hide the veo logo */
@@ -801,8 +843,8 @@
 
 .hamburger-text-grid {
     position: absolute;
-    width: 90%;
-    max-width: 1400px;
+    width: 96%;
+    max-width: 1650px;
     height: 70%;
     z-index: 2;
     display: grid;
@@ -820,7 +862,7 @@
 }
 
 .hb-text h4 {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 300;
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(255,255,255,0.2);
